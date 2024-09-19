@@ -1,10 +1,23 @@
 package main
 
 import (
+	"context"
+	"log"
 
-	"github.com/gorilla/mux"
+	"github.com/RazanakotoMandresy/deliveryapp-backend/http/rest"
 )
 
 func main() {
-	mux.NewRouter()
+    if err := run(context.Background()); err != nil {
+        log.Fatalf("%+v", err)
+    }
+}
+
+func run(ctx context.Context) error {
+    server, err := rest.NewServer()
+    if err != nil {
+        return err
+    }
+    err = server.Run(ctx)
+    return err
 }
