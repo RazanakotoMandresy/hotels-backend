@@ -18,7 +18,7 @@ type Database struct {
 }
 
 func NewParsedConfig() (Config, error) {
-	_ = godotenv.Load("env")
+	_ = godotenv.Load(".env")
 	cnf := Config{}
 	err := envconfig.Process("", &cnf)
 	return cnf, err

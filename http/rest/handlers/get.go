@@ -4,7 +4,6 @@ import (
 	"errors"
 
 	"net/http"
-	"strconv"
 	"time"
 
 	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
@@ -23,8 +22,8 @@ func (s service) Get() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 
-		numUUID, err := strconv.Atoi(vars["uuid"])
-		if err != nil {
+		numUUID, exist := vars["uuid"]
+		if exist {
 			// s.respond(w, erru.ErrArgument{
 			//     Wrapped: errors.New("valid id must provide in path"),
 			// }, 0)
@@ -32,7 +31,7 @@ func (s service) Get() http.HandlerFunc {
 			return
 		}
 
-		getResponse, err := s.hotelsService.Get(r.Context(), string(numUUID))
+		getResponse, err := s.hotelsService.Get(r.Context(), numUUID)
 		if err != nil {
 			s.respond(w, err, 0)
 			return
