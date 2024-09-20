@@ -1,4 +1,4 @@
-module github.com/RazanakotoMandresy/deliveryapp-backend
+module github.com/RazanakotoMandresy/hotels-backend
 
 go 1.22.5
 

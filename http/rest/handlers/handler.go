@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	hotelsRepo "github.com/RazanakotoMandresy/deliveryapp-backend/internal/repository"
-	hotelsService "github.com/RazanakotoMandresy/deliveryapp-backend/internal/service"
+	hotelsRepo "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
+	hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 	"github.com/jmoiron/sqlx"
 	"github.com/sirupsen/logrus"
 )

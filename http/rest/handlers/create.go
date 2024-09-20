@@ -3,8 +3,8 @@ package handlers
 import (
 	"net/http"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
-	hotelsService "github.com/RazanakotoMandresy/deliveryapp-backend/internal/service"
+	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 )
 
 func (s service) Create() http.HandlerFunc {

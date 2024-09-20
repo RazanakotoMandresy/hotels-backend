@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/gorilla/mux"
 )
 
@@ -24,9 +24,6 @@ func (s service) Get() http.HandlerFunc {
 
 		numUUID, exist := vars["uuid"]
 		if exist {
-			// s.respond(w, erru.ErrArgument{
-			//     Wrapped: errors.New("valid id must provide in path"),
-			// }, 0)
 			s.respond(w, errors.New("valid id must provide in path"), 0)
 			return
 		}

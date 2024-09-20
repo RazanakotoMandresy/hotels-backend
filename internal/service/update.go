@@ -3,7 +3,7 @@ package service
 import (
 	"context"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/asaskevich/govalidator"
 )
 

@@ -4,7 +4,7 @@ import (
 	"context"
 	"log"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/http/rest"
+	"github.com/RazanakotoMandresy/hotels-backend/http/rest"
 )
 
 func main() {

@@ -9,9 +9,9 @@ import (
 	"sync"
 	"syscall"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/configs"
-	"github.com/RazanakotoMandresy/deliveryapp-backend/http/rest/handlers"
-	"github.com/RazanakotoMandresy/deliveryapp-backend/pkg/db"
+	"github.com/RazanakotoMandresy/hotels-backend/configs"
+	"github.com/RazanakotoMandresy/hotels-backend/http/rest/handlers"
+	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
 	"github.com/sirupsen/logrus"

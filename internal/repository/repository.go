@@ -3,8 +3,8 @@ package repository
 import (
 	"context"
 
-	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
-	"github.com/RazanakotoMandresy/deliveryapp-backend/pkg/db"
+	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
 	"github.com/jmoiron/sqlx"
 )
 

@@ -1,6 +1,6 @@
 package service
 
-import "github.com/RazanakotoMandresy/deliveryapp-backend/internal/repository"
+import "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
 type Service struct {
     repo repository.Repository
 }
