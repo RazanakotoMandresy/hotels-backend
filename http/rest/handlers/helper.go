@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
+	"fmt"
 	"io"
 	"net/http"
 )
@@ -12,15 +13,14 @@ func (s service) respond(w http.ResponseWriter, data interface{}, status int) {
 	var respData interface{}
 	switch v := data.(type) {
 	case nil:
-	// case erru.ErrArgument:
-	//     status = http.StatusBadRequest
-	//     respData = ErrorResponse{ErrorMessage: v.Unwrap().Error()}
+	    status = http.StatusBadRequest
 	case error:
 		if http.StatusText(status) == "" {
 			status = http.StatusInternalServerError
+			respData = fmt.Errorf("teto ny error koa ohatra  %v", v.Error())
+
 		} else {
-			// respData = ErrorResponse{ErrorMessage: v.Error()}
-			v.Error()
+			respData = fmt.Errorf("teto ny error %v", v.Error())
 		}
 	default:
 		respData = data

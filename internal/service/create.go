@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
 	"github.com/asaskevich/govalidator"
@@ -18,13 +19,12 @@ type CreateParams struct {
 
 func (s Service) Create(ctx context.Context, params CreateParams) (string, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
-		// return 0, erru.ErrArgument{Wrapped: err}
-		return "err create", err
+		return "", err
 	}
 
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
-		return "errcreate", err
+		return "", err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
@@ -36,9 +36,11 @@ func (s Service) Create(ctx context.Context, params CreateParams) (string, error
 		Status:      params.Status,
 		CreatedOn:   time.Now().UTC(),
 	}
+	fmt.Println(entity.UUID)
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
-		return "err create", err
+		fmt.Println("err services ", err)
+		return "", err
 	}
 
 	err = tx.Commit()

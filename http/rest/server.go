@@ -28,8 +28,7 @@ func NewServer() (*Server, error) {
     cnf, err := configs.NewParsedConfig()
     if err != nil {
         return nil, err
-    }
-
+    }   
     database, err := db.Connect(db.ConfingDB{
         Host:     cnf.Database.Host,
         Port:     cnf.Database.Port,

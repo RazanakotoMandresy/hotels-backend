@@ -23,7 +23,7 @@ func (s Status) IsValid() bool {
 }
 
 type Hotels struct {
-	UUID        string        `db:"uuid"`
+	UUID        string     `db:"uuid"`
 	Name        string     `db:"name"`
 	Description string     `db:"description"`
 	Status      Status     `db:"status"`

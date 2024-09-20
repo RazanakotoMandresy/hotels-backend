@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/RazanakotoMandresy/deliveryapp-backend/internal/model"
 	"github.com/RazanakotoMandresy/deliveryapp-backend/pkg/db"
@@ -19,16 +18,14 @@ func NewRepository(db *sqlx.DB) Repository {
 
 func (r Repository) Find(ctx context.Context, uuid string) (model.Hotels, error) {
 	entity := model.Hotels{}
-	query := fmt.Sprintf(
-		"SELECT * FROM hotels WHERE uuid = $1 AND deleted_on IS NULL",
-	)
+	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_on IS NULL"
 	err := r.Db.GetContext(ctx, &entity, query, uuid)
 	return entity, db.HandleError(err)
 }
 
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
-	query := `INSERT INTO hotels (name, description, status, created_on, updated_on)
-                VALUES (:name, :description, :status, :created_on, :updated_on) RETURNING uuid;`
+	query := `INSERT INTO hotels (uuid ,name, description, status, created_on, updated_on)
+                VALUES (:uuid ,:name, :description, :status, :created_on, :updated_on) RETURNING uuid;`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
 	if err != nil {
 		return db.HandleError(err)
@@ -58,9 +55,7 @@ func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
 
 func (r Repository) FindAll(ctx context.Context) ([]model.Hotels, error) {
 	var entities []model.Hotels
-	query := fmt.Sprintf(
-		"SELECT * FROM todo WHERE deleted_on IS NULL",
-	)
+	query := "SELECT * FROM todo WHERE deleted_on IS NULL"
 	err := r.Db.SelectContext(ctx, &entities, query)
 	return entities, db.HandleError(err)
 }
