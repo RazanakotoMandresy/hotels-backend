@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/asaskevich/govalidator"
@@ -36,10 +35,8 @@ func (s Service) Create(ctx context.Context, params CreateParams) (string, error
 		Status:      params.Status,
 		CreatedOn:   time.Now().UTC(),
 	}
-	fmt.Println(entity.UUID)
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
-		fmt.Println("err services ", err)
 		return "", err
 	}
 
