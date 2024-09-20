@@ -13,14 +13,13 @@ func (s service) respond(w http.ResponseWriter, data interface{}, status int) {
 	var respData interface{}
 	switch v := data.(type) {
 	case nil:
-	    status = http.StatusBadRequest
+		status = http.StatusBadRequest
 	case error:
 		if http.StatusText(status) == "" {
 			status = http.StatusInternalServerError
-			respData = fmt.Errorf("teto ny error koa ohatra  %v", v.Error())
-
+			respData = fmt.Errorf("error%v", v.Error())
 		} else {
-			respData = fmt.Errorf("teto ny error %v", v.Error())
+			respData = fmt.Errorf("error %v", v.Error())
 		}
 	default:
 		respData = data

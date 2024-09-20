@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
@@ -15,11 +16,13 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) Repository {
 	return Repository{Db: db}
 }
-
 func (r Repository) Find(ctx context.Context, uuid string) (model.Hotels, error) {
+	fmt.Println("find handler")
 	entity := model.Hotels{}
 	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_on IS NULL"
 	err := r.Db.GetContext(ctx, &entity, query, uuid)
+	fmt.Println(entity,query,entity.UUID,uuid)
+	fmt.Println("repondray", err)
 	return entity, db.HandleError(err)
 }
 
@@ -55,7 +58,7 @@ func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
 
 func (r Repository) FindAll(ctx context.Context) ([]model.Hotels, error) {
 	var entities []model.Hotels
-	query := "SELECT * FROM todo WHERE deleted_on IS NULL"
+	query := "SELECT * FROM hotels WHERE deleted_on IS NULL"
 	err := r.Db.SelectContext(ctx, &entities, query)
 	return entities, db.HandleError(err)
 }

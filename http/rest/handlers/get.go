@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"errors"
+	"fmt"
 
 	"net/http"
 	"time"
@@ -21,14 +22,14 @@ func (s service) Get() http.HandlerFunc {
 	}
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
-
 		numUUID, exist := vars["uuid"]
-		if exist {
-			s.respond(w, errors.New("valid id must provide in path"), 0)
+		if !exist {
+			s.respond(w, errors.New("valid uuid must provide in path"), 0)
+			fmt.Println("get haaaaadler", exist)
 			return
 		}
-
 		getResponse, err := s.hotelsService.Get(r.Context(), numUUID)
+		fmt.Println("handler", err)
 		if err != nil {
 			s.respond(w, err, 0)
 			return
