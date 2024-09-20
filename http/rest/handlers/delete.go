@@ -8,7 +8,6 @@ import (
 func (s service) Delete() http.HandlerFunc {
     return func(w http.ResponseWriter, r *http.Request) {
         vars := mux.Vars(r)
-
         uuid, err := vars["uuid"]
         if err  {
             s.respond(w, err, 0)

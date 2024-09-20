@@ -2,7 +2,6 @@ package repository
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
@@ -17,12 +16,9 @@ func NewRepository(db *sqlx.DB) Repository {
 	return Repository{Db: db}
 }
 func (r Repository) Find(ctx context.Context, uuid string) (model.Hotels, error) {
-	fmt.Println("find handler")
 	entity := model.Hotels{}
 	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_on IS NULL"
 	err := r.Db.GetContext(ctx, &entity, query, uuid)
-	fmt.Println(entity,query,entity.UUID,uuid)
-	fmt.Println("repondray", err)
 	return entity, db.HandleError(err)
 }
 
