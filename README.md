@@ -1,0 +1,1 @@
+# an HOTELS written in go follow a clean architecute
