@@ -22,23 +22,23 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 		// return erru.ErrArgument{Wrapped: err}
 		return err
 	}
-	// find todo object
-	todo, err := s.Get(ctx, params.UUID)
+	// find hotels object
+	hotels, err := s.Get(ctx, params.UUID)
 	if err != nil {
 		return err
 	}
 
 	if params.Name != nil {
-		todo.Name = *params.Name
+		hotels.Name = *params.Name
 	}
 	if params.Description != nil {
-		todo.Description = *params.Description
+		hotels.Description = *params.Description
 	}
 	if params.Status != nil {
 		if !params.Status.IsValid() {
 			return err
 		}
-		todo.Status = *params.Status
+		hotels.Status = *params.Status
 	}
 
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
@@ -48,7 +48,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
 
-	err = s.repo.Update(ctx, todo)
+	err = s.repo.Update(ctx, hotels)
 	if err != nil {
 		return err
 	}
