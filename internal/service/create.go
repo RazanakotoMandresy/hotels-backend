@@ -16,20 +16,20 @@ type CreateParams struct {
 	Status      model.Status `valid:"required"`
 }
 
-func (s Service) Create(ctx context.Context, params CreateParams) (string, error) {
+func (s Service) Create(ctx context.Context, params CreateParams) (uuid.UUID, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
-		return "", err
+		return uuid.Nil, err
 	}
 
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
-		return "", err
+		return uuid.Nil, err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
 
 	entity := model.Hotels{
-		UUID:        uuid.NewString(),
+		UUID:        uuid.New(),
 		Name:        params.Name,
 		Description: params.Description,
 		Status:      params.Status,
@@ -37,7 +37,7 @@ func (s Service) Create(ctx context.Context, params CreateParams) (string, error
 	}
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
-		return "", err
+		return uuid.Nil, err
 	}
 
 	err = tx.Commit()

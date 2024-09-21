@@ -5,6 +5,7 @@ import (
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
+	"github.com/google/uuid"
 )
 
 func (s service) Create() http.HandlerFunc {
@@ -15,7 +16,7 @@ func (s service) Create() http.HandlerFunc {
 	}
 
 	type response struct {
-		UUID string `json:"uuid"`
+		UUID uuid.UUID `json:"uuid"`
 	}
 
 	return func(w http.ResponseWriter, r *http.Request) {

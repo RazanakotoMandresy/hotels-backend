@@ -7,12 +7,13 @@ import (
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
 func (s service) Get() http.HandlerFunc {
 	type response struct {
-		UUID        string       `json:"uuid"`
+		UUID        uuid.UUID    `json:"uuid"`
 		Name        string       `json:"name"`
 		Description string       `json:"description"`
 		Status      model.Status `json:"status"`

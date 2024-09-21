@@ -6,6 +6,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type responseString struct {
+	res string `json:"res"`
+}
+
 func (s service) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
@@ -20,6 +24,6 @@ func (s service) Delete() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, 0)
 			return
 		}
-		s.respond(w, nil, http.StatusOK)
+		s.respond(w, responseString{"effacer avec success"}, http.StatusOK)
 	}
 }

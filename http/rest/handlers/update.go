@@ -5,6 +5,7 @@ import (
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
+	// "github.com/google/uuid"
 
 	"github.com/gorilla/mux"
 )
