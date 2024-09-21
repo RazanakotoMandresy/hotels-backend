@@ -16,7 +16,7 @@ func (s service) Create() http.HandlerFunc {
 			return
 		}
 
-		uuid, err := s.hotelsService.Create(r.Context(), hotelsService.CreateParams{
+		res, err := s.hotelsService.Create(r.Context(), hotelsService.CreateParams{
 			Name:        req.Name,
 			Description: req.Description,
 			Status:      req.Status,
@@ -27,6 +27,6 @@ func (s service) Create() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, response{UUID: uuid}, http.StatusOK)
+		s.respond(w, modelResponse{res}, http.StatusOK)
 	}
 }

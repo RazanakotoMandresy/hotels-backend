@@ -21,14 +21,14 @@ type CreateParams struct {
 	// CreatedAt time.Time
 }
 
-func (s Service) Create(ctx context.Context, params CreateParams) (uuid.UUID, error) {
+func (s Service) Create(ctx context.Context, params CreateParams) (model.Hotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
-		return uuid.Nil, err
+		return model.Hotels{}, err
 	}
 
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
-		return uuid.Nil, err
+		return model.Hotels{}, err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
@@ -43,10 +43,10 @@ func (s Service) Create(ctx context.Context, params CreateParams) (uuid.UUID, er
 	}
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
-		return uuid.Nil, err
+		return model.Hotels{}, err
 
 	}
 
 	err = tx.Commit()
-	return entity.UUID, err
+	return entity, err
 }

@@ -18,6 +18,9 @@ type response struct {
 	CreatedOn   time.Time    `json:"created_on"`
 	UpdatedOn   *time.Time   `json:"updated_on,omitempty"`
 }
+type modelResponse struct {
+	Res model.Hotels `json:"res"`
+}
 type responseString struct {
 	Res string `json:"res"`
 }
