@@ -4,30 +4,15 @@ import (
 	"bytes"
 	"encoding/json"
 	"errors"
-	"fmt"
+	// "fmt"
 	"io"
 	"net/http"
 )
-
-func (s service) respond(w http.ResponseWriter, data interface{}, status int) {
-	var respData interface{}
-	switch v := data.(type) {
-	case nil:
-		status = http.StatusBadRequest
-	case error:
-		if http.StatusText(status) == "" {
-			status = http.StatusInternalServerError
-			respData = fmt.Errorf("error%v", v.Error())
-		} else {
-			respData = fmt.Errorf("error %v", v.Error())
-		}
-	default:
-		respData = data
-	}
-
+// la reponse des handlers
+func (s service) respond(w http.ResponseWriter, respData interface{}, status int) {
 	w.WriteHeader(status)
 	w.Header().Set("Content-Type", "application/json")
-	if data != nil {
+	if respData != nil {
 		err := json.NewEncoder(w).Encode(respData)
 		if err != nil {
 			http.Error(w, "Could not encode in json", http.StatusBadRequest)
