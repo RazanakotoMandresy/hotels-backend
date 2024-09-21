@@ -1,7 +1,7 @@
 package service
 
 import "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
-type Service struct {
+type    Service struct {
     repo repository.Repository
 }
 

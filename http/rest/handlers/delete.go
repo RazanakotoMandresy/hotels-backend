@@ -6,10 +6,6 @@ import (
 	"github.com/gorilla/mux"
 )
 
-type responseString struct {
-	Res string `json:"res"`
-}
-
 func (s service) Delete() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)

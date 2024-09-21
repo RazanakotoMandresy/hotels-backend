@@ -19,7 +19,7 @@ func (s Service) Delete(ctx context.Context, uuid string) error {
     defer tx.Rollback()
 
     now := time.Now().UTC()
-    todo.DeletedOn = &now
+    todo.DeletedAt = &now
     err = s.repo.Update(ctx, todo)
     if err != nil {
         return err

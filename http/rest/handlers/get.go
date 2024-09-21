@@ -1,24 +1,12 @@
 package handlers
 
 import (
-
 	"net/http"
-	"time"
-
-	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
-	"github.com/google/uuid"
 	"github.com/gorilla/mux"
 )
 
 func (s service) Get() http.HandlerFunc {
-	type response struct {
-		UUID        uuid.UUID    `json:"uuid"`
-		Name        string       `json:"name"`
-		Description string       `json:"description"`
-		Status      model.Status `json:"status"`
-		CreatedOn   time.Time    `json:"created_on"`
-		UpdatedOn   *time.Time   `json:"updated_on,omitempty"`
-	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
 		vars := mux.Vars(r)
 		numUUID, exist := vars["uuid"]
@@ -36,8 +24,8 @@ func (s service) Get() http.HandlerFunc {
 			Name:        getResponse.Name,
 			Description: getResponse.Description,
 			Status:      getResponse.Status,
-			CreatedOn:   getResponse.CreatedOn,
-			UpdatedOn:   getResponse.UpdatedOn,
+			CreatedOn:   getResponse.CreatedAt,
+			UpdatedOn:   getResponse.UpdatedAt,
 		}, http.StatusOK)
 	}
 }

@@ -7,11 +7,14 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
+// no need services here
 type UpdateParams struct {
 	UUID        string `valid:"required"`
 	Name        *string
 	Description *string
+	Prix        *uint
 	Status      *model.Status
+	Ouverture   *string
 }
 
 func (s Service) Update(ctx context.Context, params UpdateParams) error {
@@ -19,7 +22,6 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 		// return erru.ErrArgument{Wrapped: err}
 		return err
 	}
-
 	// find todo object
 	todo, err := s.Get(ctx, params.UUID)
 	if err != nil {
@@ -34,7 +36,6 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 	}
 	if params.Status != nil {
 		if !params.Status.IsValid() {
-			// return erru.ErrArgument{Wrapped: errors.New("given status not valid")}
 			return err
 		}
 		todo.Status = *params.Status
