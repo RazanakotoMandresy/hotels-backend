@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 )
+
 // la reponse des handlers
 func (s service) respond(w http.ResponseWriter, respData interface{}, status int) {
 	w.WriteHeader(status)

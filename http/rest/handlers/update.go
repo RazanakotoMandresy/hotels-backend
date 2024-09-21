@@ -1,7 +1,6 @@
 package handlers
 
 import (
-	"errors"
 	"net/http"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
@@ -26,7 +25,7 @@ func (s service) Update() http.HandlerFunc {
 		uuid, exist := vars["uuid"]
 		if !exist {
 
-			s.respond(w, errors.New("valid id must provide in path"), 0)
+			s.respond(w, errorResponse{"valid id must provide in path"}, 0)
 			return
 		}
 
@@ -34,7 +33,7 @@ func (s service) Update() http.HandlerFunc {
 		// Try to decode the request body into the struct. If there is an error,
 		// respond to the client with the error message and a 400 status code.
 		if err := s.decode(r, &req); err != nil {
-			s.respond(w, err, 0)
+			s.respond(w, errorResponse{err.Error()}, 0)
 			return
 		}
 		err := s.hotelsService.Update(r.Context(), hotelsService.UpdateParams{
@@ -44,7 +43,7 @@ func (s service) Update() http.HandlerFunc {
 			Status:      req.Status,
 		})
 		if err != nil {
-			s.respond(w, err, 0)
+			s.respond(w, errorResponse{err.Error()}, 0)
 			return
 		}
 		s.respond(w, response{UUID: uuid}, http.StatusOK)
