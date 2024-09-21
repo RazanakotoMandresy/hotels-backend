@@ -1,4 +1,4 @@
 build:
-	@go build -C cmd/app -o ../../bin/deliveryapp-backend .
+	@go build -C cmd/app -o ../../bin/hotels-backend .
 run:build
-	@./bin/deliveryapp-backend
+	@./bin/hotels-backend

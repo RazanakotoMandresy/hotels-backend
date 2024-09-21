@@ -21,11 +21,10 @@ func (s service) Create() http.HandlerFunc {
 
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := request{}
-		// Try to decode the request body into the struct. If there is an error,
-		// respond to the client with the error message and a 400 status code.
+		
 		err := s.decode(r, &req)
 		if err != nil {
-			s.respond(w, errorResponse{err.Error()}, 0)
+			s.respond(w, errorResponse{err.Error() + "decode's problems"}, 500)
 			return
 		}
 
@@ -35,7 +34,7 @@ func (s service) Create() http.HandlerFunc {
 			Status:      req.Status,
 		})
 		if err != nil {
-			s.respond(w, errorResponse{err.Error()}, 0)
+			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
 		s.respond(w, response{UUID: uuid}, http.StatusOK)

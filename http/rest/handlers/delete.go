@@ -7,7 +7,7 @@ import (
 )
 
 type responseString struct {
-	res string `json:"res"`
+	Res string `json:"res"`
 }
 
 func (s service) Delete() http.HandlerFunc {
@@ -18,7 +18,6 @@ func (s service) Delete() http.HandlerFunc {
 			s.respond(w, errorResponse{"veillez ajouter un uuid valide"}, 0)
 			return
 		}
-
 		err := s.hotelsService.Delete(r.Context(), uuid)
 		if err != nil {
 			s.respond(w, errorResponse{err.Error()}, 0)

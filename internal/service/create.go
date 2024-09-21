@@ -38,6 +38,7 @@ func (s Service) Create(ctx context.Context, params CreateParams) (uuid.UUID, er
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
 		return uuid.Nil, err
+		
 	}
 
 	err = tx.Commit()
