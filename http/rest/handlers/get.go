@@ -25,6 +25,7 @@ func (s service) Get() http.HandlerFunc {
 			Description: getResponse.Description,
 			Status:      getResponse.Status,
 			Created_at:  getResponse.CreatedAt,
+			Prix : getResponse.Prix,
 			Updated_at:  getResponse.UpdatedAt,
 		}, http.StatusOK)
 	}
