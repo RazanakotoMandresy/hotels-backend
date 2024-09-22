@@ -22,7 +22,7 @@ func (s service) Update() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
-
+		// now := time.Now()
 		res, err := s.hotelsService.Update(r.Context(), hotelsService.UpdateParams{
 			UUID:        uuid,
 			Name:        &req.Name,

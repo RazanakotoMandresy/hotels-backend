@@ -19,6 +19,7 @@ type response struct {
 	Updated_at  *time.Time `json:"updated_at,omitempty"`
 	Prix        uint       `json:"prix"`
 	Ouverture   string     `json:"ouverture"`
+	Services    []string   `json:"services"`
 }
 type modelResponse struct {
 	Res model.Hotels `json:"res"`

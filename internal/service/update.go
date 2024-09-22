@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/asaskevich/govalidator"
@@ -15,6 +16,7 @@ type UpdateParams struct {
 	Prix        *uint
 	Status      *int
 	Ouverture   *string
+	UpdatedAt   time.Time
 }
 
 func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels, error) {
@@ -37,27 +39,22 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 		hotels.Prix = *params.Prix
 	}
 	if params.Status != nil {
-		// if !params.Status.IsValid() {
-		// fmt.Println("err2")
-		// 	return model.Hotels{}, err
-		// }
 		hotels.Status = *params.Status
 	}
 	if params.Ouverture != nil {
 		hotels.Ouverture = *params.Ouverture
 	}
+	now := time.Now().UTC()
+	hotels.UpdatedAt = &now
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
 		return nil, err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
-
-	err = s.repo.Update(ctx, *hotels)
-	if err != nil {
+	if err := s.repo.Update(ctx, *hotels); err != nil {
 		return nil, err
 	}
-
 	err = tx.Commit()
 	if err != nil {
 		return hotels, err
