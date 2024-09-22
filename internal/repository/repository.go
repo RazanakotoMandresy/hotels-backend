@@ -14,13 +14,25 @@ type Repository struct {
 func NewRepository(db *sqlx.DB) Repository {
 	return Repository{Db: db}
 }
-func (r Repository) Find(ctx context.Context, uuid string) (model.Hotels, error) {
-	entity := model.Hotels{}
-	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_at IS NULL"
-	err := r.Db.GetContext(ctx, &entity, query, uuid)
-	return entity, err
-}
 
+func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error) {
+	entity := new(model.Hotels)
+	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_at IS NULL"
+	err := r.Db.GetContext(ctx, entity, query, uuid)
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
+}
+func (r Repository) FindByUUID(ctx context.Context, uuid string) (*model.Hotels, error) {
+	entity := new(model.Hotels)
+	query := "SELECT * FORM hotels WHERE uuid = $1"
+	err := r.Db.GetContext(ctx, &entity, query, uuid)
+	if err != nil {
+		return nil, err
+	}
+	return entity, nil
+}
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
 	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, status,created_by ,  created_at, updated_at)
                 VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :status,:created_by,:created_at, :updated_at) RETURNING uuid;`

@@ -11,5 +11,5 @@ func (s Service) Get(ctx context.Context, uuid string) (*model.Hotels, error) {
 	if err != nil {
 		return nil, err
 	}
-	return &hotels, nil
+	return hotels, nil
 }
