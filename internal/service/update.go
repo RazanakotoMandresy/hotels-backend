@@ -17,15 +17,17 @@ type UpdateParams struct {
 	Ouverture   *string
 }
 
-func (s Service) Update(ctx context.Context, params UpdateParams) error {
+// type NilHotel model.Hotels
+
+func (s Service) Update(ctx context.Context, params UpdateParams) (model.Hotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		// return erru.ErrArgument{Wrapped: err}
-		return err
+		return model.Hotels{}, err
 	}
 	// find hotels object
 	hotels, err := s.Get(ctx, params.UUID)
 	if err != nil {
-		return err
+		return model.Hotels{}, err
 	}
 
 	if params.Name != nil {
@@ -34,25 +36,30 @@ func (s Service) Update(ctx context.Context, params UpdateParams) error {
 	if params.Description != nil {
 		hotels.Description = *params.Description
 	}
+	if params.Prix != nil {
+		hotels.Prix = *params.Prix
+	}
 	if params.Status != nil {
 		if !params.Status.IsValid() {
-			return err
+			return model.Hotels{}, err
 		}
 		hotels.Status = *params.Status
 	}
-
+	if params.Ouverture != nil {
+		hotels.Ouverture = *params.Ouverture
+	}
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
-		return err
+		return model.Hotels{}, err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
 
 	err = s.repo.Update(ctx, hotels)
 	if err != nil {
-		return err
+		return model.Hotels{}, err
 	}
 
 	err = tx.Commit()
-	return err
+	return model.Hotels{}, err
 }
