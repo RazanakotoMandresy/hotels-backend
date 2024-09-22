@@ -9,10 +9,9 @@ import (
 func (s service) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := new(fullRequest)
-
 		err := s.decode(r, &req)
 		if err != nil {
-			s.respond(w, errorResponse{err.Error() + "decode's problems"}, 500)
+			s.respond(w, errorResponse{err.Error() + "decode's problems"}, http.StatusInternalServerError)
 			return
 		}
 
@@ -24,7 +23,7 @@ func (s service) Create() http.HandlerFunc {
 			Prix:        req.Prix,
 		})
 		if err != nil {
-			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
+			s.respond(w, errorResponse{err.Error() + "create handler"}, http.StatusInternalServerError)
 			return
 		}
 		s.respond(w, modelResponse{res}, http.StatusOK)

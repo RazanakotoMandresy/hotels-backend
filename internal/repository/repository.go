@@ -22,8 +22,8 @@ func (r Repository) Find(ctx context.Context, uuid string) (model.Hotels, error)
 }
 
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
-	query := `INSERT INTO hotels (uuid ,name, description, services, prix, created_at, updated_at)
-                VALUES (:uuid ,:name, :description, :services, :prix,:created_at, :updated_at) RETURNING uuid;`
+	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, status,created_by ,  created_at, updated_at)
+                VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :status,:created_by,:created_at, :updated_at) RETURNING uuid;`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
 	if err != nil {
 		return err
@@ -43,9 +43,9 @@ func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
                 SET name = :name, 
                     description = :description, 
                     status = :status, 
-                    created_on = :created_at, 
-                    updated_on = :updated_at, 
-                    deleted_on = :deleted_at
+                    created_at = :created_at, 
+                    updated_at = :updated_at, 
+                    deleted_at = :deleted_at
                 WHERE uuid = :uuid;`
 	_, err := r.Db.NamedExecContext(ctx, query, entity)
 	return err

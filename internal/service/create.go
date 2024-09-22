@@ -12,13 +12,12 @@ import (
 )
 
 type CreateParams struct {
-	Name        string       `valid:"required"`
-	Description string       `valid:"required"`
-	Services    pq.StringArray      
-	Prix        uint         `valid:"required"`
-	Status      model.Status `valid:"required"`
-	Ouverture   string       `valid:"required"`
-	// CreatedAt time.Time
+	Name        string `valid:"required"`
+	Description string `valid:"required"`
+	Services    pq.StringArray
+	Prix        uint   `valid:"required"`
+	Status      int    `valid:"required"`
+	Ouverture   string `valid:"required"`
 }
 
 func (s Service) Create(ctx context.Context, params CreateParams) (model.Hotels, error) {
@@ -39,6 +38,7 @@ func (s Service) Create(ctx context.Context, params CreateParams) (model.Hotels,
 		Description: params.Description,
 		Services:    params.Services,
 		Status:      params.Status,
+		Prix:        params.Prix,
 		CreatedAt:   time.Now().UTC(),
 	}
 	err = s.repo.Create(ctx, &entity)

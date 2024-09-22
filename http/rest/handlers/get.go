@@ -1,8 +1,8 @@
 package handlers
 
 import (
-	"net/http"
 	"github.com/gorilla/mux"
+	"net/http"
 )
 
 func (s service) Get() http.HandlerFunc {
@@ -16,7 +16,7 @@ func (s service) Get() http.HandlerFunc {
 		}
 		getResponse, err := s.hotelsService.Get(r.Context(), numUUID)
 		if err != nil {
-			s.respond(w, errorResponse{Err: err.Error()}, http.StatusNotFound)
+			s.respond(w, errorResponse{Err: err.Error() + "get services"}, http.StatusNotFound)
 			return
 		}
 		s.respond(w, response{
@@ -24,8 +24,8 @@ func (s service) Get() http.HandlerFunc {
 			Name:        getResponse.Name,
 			Description: getResponse.Description,
 			Status:      getResponse.Status,
-			CreatedOn:   getResponse.CreatedAt,
-			UpdatedOn:   getResponse.UpdatedAt,
+			Created_at:  getResponse.CreatedAt,
+			Updated_at:  getResponse.UpdatedAt,
 		}, http.StatusOK)
 	}
 }

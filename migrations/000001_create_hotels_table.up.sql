@@ -7,7 +7,8 @@ CREATE TABLE
         prix BIGINT,
         status SMALLINT,
         ouverture TEXT NOT NULL,
-        created_by TEXT NOT NULL,
+        -- pour l'instant mbola tsy atao not null ilay created by fa rehefa mahavita jwt sy mahita moyen update en temp reel anle izy 
+        created_by TEXT,
         created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
         updated_at TIMESTAMP(0) WITHOUT TIME ZONE,
         deleted_at TIMESTAMP(0) WITHOUT TIME ZONE,

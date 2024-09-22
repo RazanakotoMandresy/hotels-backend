@@ -11,12 +11,12 @@ type errorResponse struct {
 	Err string `json:"err"`
 }
 type response struct {
-	UUID        uuid.UUID    `json:"uuid"`
-	Name        string       `json:"name"`
-	Description string       `json:"description"`
-	Status      model.Status `json:"status"`
-	CreatedOn   time.Time    `json:"created_on"`
-	UpdatedOn   *time.Time   `json:"updated_on,omitempty"`
+	UUID        uuid.UUID  `json:"uuid"`
+	Name        string     `json:"name"`
+	Description string     `json:"description"`
+	Status      int        `json:"status"`
+	Created_at  time.Time  `json:"created_at"`
+	Updated_at  *time.Time `json:"updated_at,omitempty"`
 }
 type modelResponse struct {
 	Res model.Hotels `json:"res"`
