@@ -1,6 +1,8 @@
 package service
 
-import "context"
+import (
+	"context"
+)
 
 func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
 	hotels, err := s.repo.FindByUUID(ctx, uuid)
