@@ -13,10 +13,12 @@ func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
 	}
 	defer tx.Rollback()
 	hotels.DeletedAt = nil
-	err = s.repo.Update(ctx, *hotels)
+	if err = s.repo.Update(ctx, *hotels); err != nil {
+		return err
+	}
+	err = tx.Commit()
 	if err != nil {
 		return err
 	}
-	// er := 
 	return nil
 }

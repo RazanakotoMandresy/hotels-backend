@@ -24,10 +24,10 @@ func (s Service) Delete(ctx context.Context, uuid string) error {
 	if err != nil {
 		return err
 	}
-
 	err = tx.Commit()
 	if err != nil {
 		return err
 	}
+
 	return err
 }
