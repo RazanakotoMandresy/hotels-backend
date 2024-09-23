@@ -13,7 +13,7 @@ func (s service) Update() http.HandlerFunc {
 		vars := mux.Vars(r)
 		uuid, exist := vars["uuid"]
 		if !exist {
-			s.respond(w, errorResponse{"valid uuid must provide in path"}, http.StatusBadRequest)
+			s.respond(w, errorResponse{" valid uuid must provide in path"}, http.StatusBadRequest)
 			return
 		}
 
@@ -32,7 +32,7 @@ func (s service) Update() http.HandlerFunc {
 			Ouverture:   &req.Ouverture,
 		})
 		if err != nil {
-			s.respond(w, errorResponse{err.Error() + "update service"}, http.StatusInternalServerError)
+			s.respond(w, errorResponse{err.Error() + " update service"}, http.StatusInternalServerError)
 			return
 		}
 		s.respond(w, modelResponse{*res}, http.StatusOK)

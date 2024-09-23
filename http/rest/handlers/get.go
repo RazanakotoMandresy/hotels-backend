@@ -16,7 +16,7 @@ func (s service) Get() http.HandlerFunc {
 		}
 		getResponse, err := s.hotelsService.Get(r.Context(), numUUID)
 		if err != nil {
-			s.respond(w, errorResponse{Err: err.Error() + "get services"}, http.StatusNotFound)
+			s.respond(w, errorResponse{Err: err.Error() + " error on get services"}, http.StatusNotFound)
 			return
 		}
 		s.respond(w, response{
@@ -25,7 +25,7 @@ func (s service) Get() http.HandlerFunc {
 			Description: getResponse.Description,
 			Status:      getResponse.Status,
 			Created_at:  getResponse.CreatedAt,
-			Prix : getResponse.Prix,
+			Prix:        getResponse.Prix,
 			Updated_at:  getResponse.UpdatedAt,
 		}, http.StatusOK)
 	}

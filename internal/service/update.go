@@ -28,7 +28,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 	if err != nil {
 		return nil, err
 	}
-
+	
 	if params.Name != nil {
 		hotels.Name = *params.Name
 	}

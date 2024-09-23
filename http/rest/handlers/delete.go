@@ -21,7 +21,7 @@ func (s service) Delete() http.HandlerFunc {
 
 		if err != nil {
 			if err.Error() == "sql: no rows in result set" {
-				s.respond(w, errorResponse{fmt.Sprintf("the hotels with uuid %v has been deleted, you can restore it", uuid)}, http.StatusInternalServerError)
+				s.respond(w, errorResponse{fmt.Sprintf("the hotels with uuid %v has been deleted, you can restore it", uuid)}, http.StatusBadRequest)
 				return
 			}
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)

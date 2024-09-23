@@ -11,7 +11,7 @@ func (s service) Create() http.HandlerFunc {
 		req := new(fullRequest)
 		err := s.decode(r, &req)
 		if err != nil {
-			s.respond(w, errorResponse{err.Error() + "decode's problems"}, http.StatusInternalServerError)
+			s.respond(w, errorResponse{err.Error() + " decode's problems"}, http.StatusInternalServerError)
 			return
 		}
 
@@ -23,9 +23,9 @@ func (s service) Create() http.HandlerFunc {
 			Prix:        req.Prix,
 		})
 		if err != nil {
-			s.respond(w, errorResponse{err.Error() + "create handler"}, http.StatusInternalServerError)
+			s.respond(w, errorResponse{err.Error() + " error on happen on the create handler from services"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, modelResponse{res}, http.StatusOK)
+		s.respond(w, modelResponse{res}, http.StatusCreated)
 	}
 }
