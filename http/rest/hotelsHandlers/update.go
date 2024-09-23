@@ -3,7 +3,7 @@ package hotelshandlers
 import (
 	"net/http"
 
-	hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
+	hotelsservices "github.com/RazanakotoMandresy/hotels-backend/internal/service/hotelsServices"
 	"github.com/gorilla/mux"
 )
 
@@ -23,7 +23,7 @@ func (s service) Update() http.HandlerFunc {
 			return
 		}
 		// now := time.Now()
-		res, err := s.hotelsService.Update(r.Context(), hotelsService.UpdateParams{
+		res, err := s.hotelsService.Update(r.Context(), hotelsservices.UpdateParams{
 			UUID:        uuid,
 			Name:        &req.Name,
 			Description: &req.Description,
