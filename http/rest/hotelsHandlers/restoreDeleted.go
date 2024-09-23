@@ -1,4 +1,4 @@
-package handlers
+package hotelshandlers
 
 import (
 	"fmt"

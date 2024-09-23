@@ -1,5 +1,4 @@
-package handlers
-
+package hotelshandlers
 import (
 	"net/http"
 

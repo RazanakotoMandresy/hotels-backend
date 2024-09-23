@@ -1,4 +1,4 @@
-package handlers
+package hotelshandlers
 
 import (
 	hotelsRepo "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
