@@ -19,7 +19,7 @@ func (s service) Get() http.HandlerFunc {
 			s.respond(w, errorResponse{Err: err.Error() + " error on get services"}, http.StatusNotFound)
 			return
 		}
-		s.respond(w, response{
+		s.respond(w, responses{
 			UUID:        getResponse.UUID,
 			Name:        getResponse.Name,
 			Description: getResponse.Description,

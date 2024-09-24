@@ -12,6 +12,7 @@ func Register(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	// adding logger middleware
 	r.Use(handler.MiddlewareLogger())
 	r.HandleFunc("/hotels", handler.Create()).Methods(http.MethodPost)
+	r.HandleFunc("/hotels", handler.GetAll()).Methods(http.MethodGet)
 	r.HandleFunc("/hotels/{uuid}", handler.Get()).Methods(http.MethodGet)
 	r.HandleFunc("/hotels/restore/{uuid}", handler.RestoreDeleted()).Methods(http.MethodPut)
 	r.HandleFunc("/hotels/{uuid}", handler.Update()).Methods(http.MethodPut)

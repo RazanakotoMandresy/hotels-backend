@@ -10,7 +10,10 @@ import (
 type errorResponse struct {
 	Err string `json:"err"`
 }
-type response struct {
+type arrayHotels struct {
+	Res []model.Hotels `json:"res"`
+}
+type responses struct {
 	UUID        uuid.UUID  `json:"uuid"`
 	Name        string     `json:"name"`
 	Description string     `json:"description"`

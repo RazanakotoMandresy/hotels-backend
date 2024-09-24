@@ -1,8 +1,6 @@
 package hotelshandlers
 
 import (
-	// hotelsRepo "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
-	// hotelsService "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 	"github.com/RazanakotoMandresy/hotels-backend/internal/repository"
 	hotelsservices "github.com/RazanakotoMandresy/hotels-backend/internal/service/hotelsServices"
 	"github.com/jmoiron/sqlx"
