@@ -1,11 +1,10 @@
-CREATE TABLE
-    user (
+CREATE TABLE users (
         id SERIAL,
-        name UNIQUE TEXT NOT NULL,
-        mail UNIQUE TEXT NOT NULL,
+        name  TEXT NOT NULL UNIQUE,
+        mail  TEXT NOT NULL UNIQUE,
         list_hotels TEXT[],
         created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
         updated_at TIMESTAMP(0) WITHOUT TIME ZONE,
         deleted_at TIMESTAMP(0) WITHOUT TIME ZONE,
         PRIMARY KEY (id)
-    )
+    ) 
