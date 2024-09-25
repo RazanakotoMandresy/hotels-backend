@@ -20,14 +20,14 @@ type CreateParams struct {
 	Ouverture   string `valid:"required"`
 }
 
-func (s Service) Create(ctx context.Context, params CreateParams) (model.Hotels, error) {
+func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
-		return model.Hotels{}, err
+		return nil, err
 	}
 
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
-		return model.Hotels{}, err
+		return nil, err
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
@@ -43,10 +43,10 @@ func (s Service) Create(ctx context.Context, params CreateParams) (model.Hotels,
 	}
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {
-		return model.Hotels{}, err
+		return nil, err
 
 	}
 
 	err = tx.Commit()
-	return entity, err
+	return &entity, err
 }

@@ -26,6 +26,6 @@ func (s service) Create() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " error on happen on the create handler from services"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, modelResponse{res}, http.StatusCreated)
+		s.respond(w, modelResponse{*res}, http.StatusCreated)
 	}
 }
