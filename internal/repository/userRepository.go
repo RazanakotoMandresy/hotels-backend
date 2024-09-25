@@ -8,7 +8,7 @@ import (
 
 func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 	query := `INSERT INTO users (uuid , name , mail , list_hotels , created_at, updated_at, deleted_at)
-	 VALUES (:uuid, :name, :mail, :list_hotels,created_at, updated_at, deleted_at)`
+	 VALUES (:uuid, :name, :mail, :list_hotels, :created_at, :updated_at, :deleted_at)`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
 	if err != nil {
 		return err

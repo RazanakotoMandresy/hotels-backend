@@ -21,7 +21,7 @@ type Hotels struct {
 	DeletedAt   *time.Time     `db:"deleted_at"`
 }
 type Users struct {
-	UUID       uuid.UUID      `db:"id"`
+	UUID       uuid.UUID      `db:"uuid"`
 	Name       string         `db:"name"`
 	Passwords  string         `db:"passwords"`
 	Mail       string         `db:"mail"`
