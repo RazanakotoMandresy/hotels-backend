@@ -1,4 +1,4 @@
-package hotelshandlers
+package handler
 
 import (
 	"time"
@@ -13,7 +13,7 @@ type errorResponse struct {
 type arrayHotels struct {
 	Res []model.Hotels `json:"res"`
 }
-type responses struct {
+type responsesHotels struct {
 	UUID        uuid.UUID  `json:"uuid"`
 	Name        string     `json:"name"`
 	Description string     `json:"description"`

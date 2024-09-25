@@ -1,8 +1,9 @@
-package hotelshandlers
+package handler
 
 import (
 	"fmt"
 	"net/http"
+
 )
 
 func (s service) Delete() http.HandlerFunc {
@@ -12,7 +13,9 @@ func (s service) Delete() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusBadRequest)
 			return
 		}
-		if err := s.hotelsService.Delete(r.Context(), uuid); err != nil {
+		// hotelsservices
+		// hotelsservices
+		if err := s.services.Delete(r.Context(),uuid); err != nil {
 			if err.Error() == "sql: no rows in result set" {
 				s.respond(w, errorResponse{fmt.Sprintf("the hotels with uuid %v has been deleted, you can restore it", uuid)}, http.StatusBadRequest)
 				return

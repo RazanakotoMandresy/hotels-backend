@@ -1,4 +1,4 @@
-package hotelshandlers
+package handler
 
 import (
 	"fmt"
@@ -12,7 +12,7 @@ func (s service) RestoreDeleted() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusBadRequest)
 			return
 		}
-		if err := s.hotelsService.RestoreDeleted(r.Context(), uuid); err != nil {
+		if err := s.services.RestoreDeleted(r.Context(), uuid); err != nil {
 			s.respond(w, errorResponse{err.Error() + " Error services Retored on handler"}, http.StatusInternalServerError)
 			return
 		}

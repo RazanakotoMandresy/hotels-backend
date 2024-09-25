@@ -1,4 +1,4 @@
-package hotelshandlers
+package handler
 import (
     "fmt"
     "net/http"

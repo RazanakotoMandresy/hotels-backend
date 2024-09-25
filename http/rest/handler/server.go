@@ -1,4 +1,4 @@
-package rest
+package handler
 
 import (
 	"context"
@@ -10,7 +10,7 @@ import (
 	"syscall"
 
 	"github.com/RazanakotoMandresy/hotels-backend/configs"
-	hotelshandlers "github.com/RazanakotoMandresy/hotels-backend/http/rest/hotelsHandlers"
+	// hotelshandlers "github.com/RazanakotoMandresy/hotels-backend/http/rest/hotelsHandlers"
 	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"
@@ -41,7 +41,7 @@ func NewServer() (*Server, error) {
 
 	log := NewLogger()
 	router := mux.NewRouter()
-	hotelshandlers.RegisterRoutes(router, log, database)
+	RegisterRoutes(router, log, database)
 
 	s := Server{
 		logger: log,

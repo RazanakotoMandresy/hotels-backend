@@ -1,4 +1,4 @@
-package hotelsservices
+package service
 
 import (
 	"context"
@@ -10,6 +10,7 @@ import (
 
 	"time"
 )
+
 
 type CreateParams struct {
 	Name        string `valid:"required"`

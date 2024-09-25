@@ -20,3 +20,13 @@ type Hotels struct {
 	UpdatedAt   *time.Time     `db:"updated_at"`
 	DeletedAt   *time.Time     `db:"deleted_at"`
 }
+type Users struct {
+	UUID       uuid.UUID      `db:"id"`
+	Name       string         `db:"name"`
+	Passwords  string         `db:"passwords"`
+	Mail       string         `db:"mail"`
+	ListHotels pq.StringArray `db:"list_hotels"`
+	CreatedAt  time.Time      `db:"created_at"`
+	UpdatedAt  *time.Time     `db:"updated_at"`
+	DeletedAt  *time.Time     `db:"deleted_at"`
+}

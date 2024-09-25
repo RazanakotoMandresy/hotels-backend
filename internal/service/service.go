@@ -1,4 +1,4 @@
-package hotelsservices
+package service
 
 import "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
 

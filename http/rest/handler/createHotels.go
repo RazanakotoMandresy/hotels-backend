@@ -1,9 +1,9 @@
-package hotelshandlers
+package handler
 
 import (
 	"net/http"
 
-	hotelsservices "github.com/RazanakotoMandresy/hotels-backend/internal/service/hotelsServices"
+	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 )
 
 func (s service) Create() http.HandlerFunc {
@@ -14,8 +14,7 @@ func (s service) Create() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " decode's problems"}, http.StatusInternalServerError)
 			return
 		}
-
-		res, err := s.hotelsService.Create(r.Context(), hotelsservices.CreateParams{
+		res, err := s.services.Create(r.Context(), services.CreateParams{
 			Name:        req.Name,
 			Description: req.Description,
 			Status:      req.Status,

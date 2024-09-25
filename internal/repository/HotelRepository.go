@@ -4,16 +4,7 @@ import (
 	"context"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
-	"github.com/jmoiron/sqlx"
 )
-
-type Repository struct {
-	Db *sqlx.DB
-}
-
-func NewRepository(db *sqlx.DB) Repository {
-	return Repository{Db: db}
-}
 
 func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error) {
 	entity := new(model.Hotels)
@@ -29,7 +20,7 @@ func (r Repository) FindByUUID(ctx context.Context, uuid string) (*model.Hotels,
 	query := "SELECT * FROM hotels WHERE uuid = $1"
 	err := r.Db.GetContext(ctx, entity, query, uuid)
 	if err != nil {
-		return nil, err
+		return nil, err 
 	}
 	return entity, nil
 }

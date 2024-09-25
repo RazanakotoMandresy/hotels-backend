@@ -1,4 +1,4 @@
-package hotelshandlers
+package handler
 
 import (
 	"github.com/gorilla/mux"

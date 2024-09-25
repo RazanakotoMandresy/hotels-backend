@@ -1,4 +1,4 @@
-package hotelshandlers
+package handler
 
 import (
 	"bytes"

@@ -1,9 +1,9 @@
-package hotelshandlers
+package handler
 
 import (
 	"net/http"
 
-	hotelsservices "github.com/RazanakotoMandresy/hotels-backend/internal/service/hotelsServices"
+	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 	"github.com/gorilla/mux"
 )
 
@@ -22,8 +22,8 @@ func (s service) Update() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
-		// now := time.Now()
-		res, err := s.hotelsService.Update(r.Context(), hotelsservices.UpdateParams{
+
+		res, err := s.services.Update(r.Context(), services.UpdateParams{
 			UUID:        uuid,
 			Name:        &req.Name,
 			Description: &req.Description,

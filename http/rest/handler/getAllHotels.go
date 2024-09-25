@@ -1,10 +1,10 @@
-package hotelshandlers
+package handler
 
 import "net/http"
 
 func (s service) GetAll() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		hotels, err := s.hotelsService.GetAllHotels(r.Context())
+		hotels, err := s.services.GetAllHotels(r.Context())
 		if err != nil {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return

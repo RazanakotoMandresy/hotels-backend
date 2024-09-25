@@ -1,4 +1,4 @@
-package hotelsservices
+package service
 
 import (
 	"context"
