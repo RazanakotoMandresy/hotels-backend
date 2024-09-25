@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
@@ -14,12 +15,10 @@ type RegisterParams struct {
 	Name     string `valid:"required"`
 	Mail     string `valid:"required"`
 	Password string `valid:"required"`
-	// List_hotels pq.StringArray `valid:"required"`
 }
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
-		fmt.Println(1)
 		return nil, err
 	}
 	if isMail := govalidator.IsEmail(params.Mail); !isMail {
@@ -27,19 +26,18 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 	}
 	tx, err := s.repo.Db.BeginTx(ctx, nil)
 	if err != nil {
-		fmt.Println(2)
 		return nil, err
 	}
 	defer tx.Rollback()
+	passwd := middleware.HashPassword(params.Password)
 	entity := model.Users{
 		UUID:      uuid.New(),
 		Name:      params.Name,
 		Mail:      params.Mail,
-		Passwords: params.Password,
+		Passwords: passwd,
 		CreatedAt: time.Now().UTC(),
 	}
 	if err := s.repo.Register(ctx, &entity); err != nil {
-		fmt.Println(3)
 		return nil, err
 	}
 	return &entity, nil
