@@ -41,7 +41,7 @@ func NewServer() (*Server, error) {
 
 	log := NewLogger()
 	router := mux.NewRouter()
-	hotelshandlers.Register(router, log, database)
+	hotelshandlers.RegisterRoutes(router, log, database)
 
 	s := Server{
 		logger: log,

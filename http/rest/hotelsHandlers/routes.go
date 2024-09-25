@@ -7,7 +7,7 @@ import (
 	"net/http"
 )
 
-func Register(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
+func RegisterRoutes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	handler := newHandler(lg, db)
 	// adding logger middleware
 	r.Use(handler.MiddlewareLogger())
