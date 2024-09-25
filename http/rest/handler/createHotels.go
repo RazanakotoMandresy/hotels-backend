@@ -25,6 +25,14 @@ func (s service) Create() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " error on happen on the create handler from services"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, modelResponse{Hotels: *res}, http.StatusCreated)
+		s.respond(w, responsesHotels{
+			UUID:        res.UUID,
+			Name:        res.Name,
+			Description: res.Description,
+			Status:      res.Status,
+			Created_at:  res.CreatedAt,
+			Prix:        res.Prix,
+			Updated_at:  res.UpdatedAt,
+		}, http.StatusCreated)
 	}
 }

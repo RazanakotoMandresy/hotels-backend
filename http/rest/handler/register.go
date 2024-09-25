@@ -26,6 +26,6 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, modelResponse{Users: *res}, http.StatusOK)
+		s.respond(w, responseUsers{*res}, http.StatusOK)
 	}
 }
