@@ -6,7 +6,7 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 )
 
-func (r Repository) Register(ctx context.Context, entity *model.Hotels) error {
+func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 	query := `INSERT INTO users (uuid , name , mail , list_hotels , created_at, updated_at, deleted_at)
 	 VALUES (:uuid, :name, :mail, :list_hotels,created_at, updated_at, deleted_at)`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
@@ -23,13 +23,12 @@ func (r Repository) Register(ctx context.Context, entity *model.Hotels) error {
 	return err
 }
 
-func (r Repository) Login(ctx context.Context, mail, passwords string) (*model.Users, error) {
+func (r Repository) Login(ctx context.Context, mail, passwords, uuid string) (*model.Users, error) {
 	entity := new(model.Users)
-	query := `SELECT * FROM users WHERE mail = $1  AND passwords = $2 AND deleted_at IS NULL`
-	err := r.Db.GetContext(ctx, entity, query, mail, passwords)
+	query := `SELECT * FROM users WHERE mail = $1  AND passwords = $2 AND uuid = $3 AND deleted_at IS NULL`
+	err := r.Db.GetContext(ctx, entity, query, mail, passwords, uuid)
 	if err != nil {
 		return nil, err
 	}
 	return entity, nil
-
 }

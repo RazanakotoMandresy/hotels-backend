@@ -17,4 +17,5 @@ func RegisterRoutes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	r.HandleFunc("/hotels/restore/{uuid}", handler.RestoreDeleted()).Methods(http.MethodPut)
 	r.HandleFunc("/hotels/{uuid}", handler.Update()).Methods(http.MethodPut)
 	r.HandleFunc("/hotels/{uuid}", handler.Delete()).Methods(http.MethodDelete)
+	r.HandleFunc("/users/register", handler.Create()).Methods(http.MethodPost)
 }

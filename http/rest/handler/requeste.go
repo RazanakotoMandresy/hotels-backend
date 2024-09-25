@@ -1,7 +1,5 @@
 package handler
 
-// import "github.com/RazanakotoMandresy/hotels-backend/internal/model"
-
 // can add all info needed in the request
 type fullRequest struct {
 	Name        string   `json:"name"`
@@ -11,3 +9,4 @@ type fullRequest struct {
 	Status      int      `json:"status"`
 	Ouverture   string   `json:"ouverture"`
 }
+

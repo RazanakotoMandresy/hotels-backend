@@ -6,18 +6,16 @@ import (
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
-	// "github.com/RazanakotoMandresy/hotels-backend/internal/repository"
-	// services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
-	"github.com/lib/pq"
+	// "github.com/lib/pq"	
 )
 
 type RegisterParams struct {
 	Name        string         `valid:"required"`
 	Mail        string         `valid:"required"`
 	Password    string         `valid:"required"`
-	List_hotels pq.StringArray `valid:"required"`
+	// List_hotels pq.StringArray `valid:"required"`
 }
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
@@ -38,6 +36,9 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 		Mail:      params.Mail,
 		Passwords: params.Password,
 		CreatedAt: time.Now().UTC(),
+	}
+	if err := s.repo.Register(ctx, &entity); err != nil {
+		return nil, err
 	}
 	return &entity, nil
 }

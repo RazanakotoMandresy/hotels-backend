@@ -35,6 +35,6 @@ func (s service) Update() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " update service"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, modelResponse{*res}, http.StatusOK)
+		s.respond(w, modelResponse{Hotels: *res}, http.StatusOK)
 	}
 }
