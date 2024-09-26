@@ -1,16 +1,15 @@
 package middleware
 
 import (
-	"fmt"
-
 	"golang.org/x/crypto/bcrypt"
 )
 
 func HashPassword(password string) (string, error) {
-	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 5)
-	if err != nil {
-		return "", fmt.Errorf("an error during the encryption of the passwords : %v ", err)
-
-	}
-	return string(bytes), err
+	chans := make(chan []byte)
+	go func() {
+		bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 10)
+		chans <- bytes
+	}()
+	bytes := <-chans
+	return string(bytes), nil
 }
