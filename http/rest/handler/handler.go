@@ -9,7 +9,6 @@ import (
 
 type service struct {
 	logger *logrus.Logger
-	// hotelsService hotelsservices.Service
 	services services.Service
 }
 

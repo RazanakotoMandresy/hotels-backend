@@ -10,7 +10,6 @@ import (
 	"syscall"
 
 	"github.com/RazanakotoMandresy/hotels-backend/configs"
-	// hotelshandlers "github.com/RazanakotoMandresy/hotels-backend/http/rest/hotelsHandlers"
 	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
 	"github.com/gorilla/mux"
 	"github.com/rs/cors"

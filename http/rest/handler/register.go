@@ -1,23 +1,19 @@
 package handler
 
 import (
-	"fmt"
-
 	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
-	"golang.org/x/crypto/bcrypt"
 
 	"net/http"
 )
 
-
 // first paramaeter the hashed passord from the db second parameter from the body
-func IsTruePassword(hashedPassword, password string) error {
-	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-	if err != nil {
-		return fmt.Errorf("you given a false passewords %v", err)
-	}
-	return nil
-}
+// func IsTruePassword(hashedPassword, password string) error {
+// 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+// 	if err != nil {
+// 		return fmt.Errorf("you given a false passewords %v", err)
+// 	}
+// 	return nil
+// }
 
 func (s service) Register() http.HandlerFunc {
 	type registerReq struct {

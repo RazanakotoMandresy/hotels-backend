@@ -13,8 +13,6 @@ func (s service) Delete() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusBadRequest)
 			return
 		}
-		// hotelsservices
-		// hotelsservices
 		if err := s.services.Delete(r.Context(),uuid); err != nil {
 			if err.Error() == "sql: no rows in result set" {
 				s.respond(w, errorResponse{fmt.Sprintf("the hotels with uuid %v has been deleted, you can restore it", uuid)}, http.StatusBadRequest)
