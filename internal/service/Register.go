@@ -2,12 +2,10 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
-	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 )
 
@@ -19,11 +17,8 @@ type RegisterParams struct {
 }
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
-	if _, err := govalidator.ValidateStruct(params); err != nil {
+	if err := authValidator(params.Mail, params); err != nil {
 		return nil, err
-	}
-	if isMail := govalidator.IsEmail(params.Mail); !isMail {
-		return nil, fmt.Errorf("%v is not an valid mail", params.Mail)
 	}
 	tx, err := s.repo.Db.BeginTx(ctx, nil)
 	if err != nil {

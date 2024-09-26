@@ -13,3 +13,10 @@ func HashPassword(password string) (string, error) {
 	bytes := <-chans
 	return string(bytes), nil
 }
+func VerifyPassword(hashedPassword, password string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
+	if err != nil {
+		return err
+	}
+	return nil
+}

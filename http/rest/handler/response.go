@@ -6,7 +6,6 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/google/uuid"
 )
-
 type errorResponse struct {
 	Err string `json:"err"`
 }
@@ -26,7 +25,7 @@ type responsesHotels struct {
 }
 type responseUsers struct {
 	Users     model.Users `json:"user"`
-	resString string      `json:"res"`
+	ResString string      `json:"res"`
 }
 type responseString struct {
 	Res string `json:"res"`
