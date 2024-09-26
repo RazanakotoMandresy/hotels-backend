@@ -2,18 +2,11 @@ package handler
 
 import (
 	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
+	"github.com/google/uuid"
 
 	"net/http"
 )
-
-// first paramaeter the hashed passord from the db second parameter from the body
-// func IsTruePassword(hashedPassword, password string) error {
-// 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
-// 	if err != nil {
-// 		return fmt.Errorf("you given a false passewords %v", err)
-// 	}
-// 	return nil
-// }
 
 func (s service) Register() http.HandlerFunc {
 	type registerReq struct {
@@ -27,15 +20,23 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Decode's problems"}, http.StatusBadRequest)
 			return
 		}
+		uuids := uuid.New()
 		res, err := s.services.Register(r.Context(), services.RegisterParams{
+			UUID:     uuids,
 			Name:     req.Name,
 			Password: req.Passwords,
 			Mail:     req.Mail,
 		})
+
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, responseUsers{*res}, http.StatusOK)
+		tokenString, err := middleware.TokenManage(req.Mail, uuids.String())
+		if err != nil {
+			s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
+			return
+		}
+		s.respond(w, responseUsers{*res, tokenString}, http.StatusOK)
 	}
 }

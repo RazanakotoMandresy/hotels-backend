@@ -15,6 +15,7 @@ type RegisterParams struct {
 	Name     string `valid:"required"`
 	Mail     string `valid:"required"`
 	Password string `valid:"required"`
+	UUID     uuid.UUID
 }
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
@@ -34,14 +35,15 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 		return nil, err
 	}
 	entity := model.Users{
-		UUID:      uuid.New(),
 		Name:      params.Name,
 		Mail:      params.Mail,
 		Passwords: passwd,
 		CreatedAt: time.Now().UTC(),
+		UUID:      params.UUID,
 	}
 	if err := s.repo.Register(ctx, &entity); err != nil {
 		return nil, err
 	}
+
 	return &entity, nil
 }

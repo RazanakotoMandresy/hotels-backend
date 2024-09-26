@@ -25,7 +25,8 @@ type responsesHotels struct {
 	Services    []string   `json:"services"`
 }
 type responseUsers struct {
-	Users model.Users `json:"res"`
+	Users     model.Users `json:"user"`
+	resString string      `json:"res"`
 }
 type responseString struct {
 	Res string `json:"res"`
