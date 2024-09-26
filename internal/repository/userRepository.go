@@ -25,8 +25,8 @@ func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 
 func (r Repository) Login(ctx context.Context, mail, passwords, uuid string) (*model.Users, error) {
 	entity := new(model.Users)
-	query := `SELECT * FROM users WHERE mail = $1  AND passwords = $2 AND uuid = $3 AND deleted_at IS NULL`
-	err := r.Db.GetContext(ctx, entity, query, mail, passwords, uuid)
+	query := `SELECT * FROM users WHERE mail = $1  AND passwords = $2 AND deleted_at IS NULL`
+	err := r.Db.GetContext(ctx, entity, query, mail, passwords)
 	if err != nil {
 		return nil, err
 	}
