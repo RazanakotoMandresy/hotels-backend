@@ -27,7 +27,6 @@ func (s service) Register() http.HandlerFunc {
 			Password: req.Passwords,
 			Mail:     req.Mail,
 		})
-
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
@@ -37,6 +36,6 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, responseUsers{*res, tokenString}, http.StatusOK)
+		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
 	}
 }
