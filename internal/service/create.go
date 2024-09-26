@@ -11,7 +11,6 @@ import (
 	"time"
 )
 
-
 type CreateParams struct {
 	Name        string `valid:"required"`
 	Description string `valid:"required"`
@@ -47,7 +46,9 @@ func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels
 		return nil, err
 
 	}
-
 	err = tx.Commit()
-	return &entity, err
+	if err != nil {
+		return nil, err
+	}
+	return &entity, nil
 }

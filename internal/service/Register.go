@@ -39,6 +39,9 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 	if err := s.repo.Register(ctx, &entity); err != nil {
 		return nil, err
 	}
-
+	err = tx.Commit()
+	if err != nil {
+		return nil, err
+	}
 	return &entity, nil
 }
