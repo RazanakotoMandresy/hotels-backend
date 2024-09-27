@@ -7,7 +7,7 @@ import (
 func HashPassword(password string) (string, error) {
 	chans := make(chan []byte)
 	go func() {
-		bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 10)
+		bytes, _ := bcrypt.GenerateFromPassword([]byte(password), 8)
 		chans <- bytes
 	}()
 	bytes := <-chans
