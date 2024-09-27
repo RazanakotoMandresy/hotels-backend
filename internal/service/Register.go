@@ -25,10 +25,7 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 		return nil, err
 	}
 	defer tx.Rollback()
-	passwd, err := middleware.HashPassword(params.Password)
-	if err != nil {
-		return nil, err
-	}
+	passwd := middleware.HashPassword(params.Password)
 	entity := model.Users{
 		Name:      params.Name,
 		Mail:      params.Mail,
