@@ -4,11 +4,14 @@ import (
 	"context"
 	"fmt"
 	"net/http"
+	"os"
 	"strings"
 	"time"
 
 	"github.com/golang-jwt/jwt"
 )
+
+var JWT_SECRET = os.Getenv("JWT_SECRET")
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +29,7 @@ func AuthMiddleware(next http.Handler) http.Handler {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method")
 			}
-			return []byte("secret"), nil
+			return []byte(JWT_SECRET), nil
 		})
 
 		if err != nil {
@@ -58,5 +61,6 @@ func CreateToken(userUUID, mail string) (string, error) {
 	claims["mail"] = mail
 	claims["exp"] = time.Now().Add(time.Hour * 24).Unix()
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
-	return token.SignedString([]byte("JWT_SECRET"))
+	// cz signed string already return err and string
+	return token.SignedString([]byte(JWT_SECRET))
 }
