@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"net/http"
 	"os"
@@ -10,6 +11,22 @@ import (
 
 	"github.com/golang-jwt/jwt"
 )
+
+type errorResponse struct {
+	Err string `json:"err"`
+}
+
+func respond(w http.ResponseWriter, respData interface{}, status int) {
+	w.WriteHeader(status)
+	w.Header().Set("Content-Type", "application/json")
+	if respData != nil {
+		err := json.NewEncoder(w).Encode(respData)
+		if err != nil {
+			http.Error(w, "Could not encode in json", http.StatusBadRequest)
+			return
+		}
+	}
+}
 
 var JWT_SECRET = os.Getenv("JWT_SECRET")
 
@@ -20,11 +37,10 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		var uuid user_uuid
 		tokenString := r.Header.Get("Authorization")
 		if tokenString == "" {
+			respond(w, errorResponse{"no token String "}, http.StatusUnauthorized)
 			return
 		}
-
 		tokenString = strings.Replace(tokenString, "Bearer ", "", 1)
-
 		token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
 			if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 				return nil, fmt.Errorf("unexpected signing method")
@@ -33,20 +49,24 @@ func AuthMiddleware(next http.Handler) http.Handler {
 		})
 
 		if err != nil {
+			respond(w, errorResponse{err.Error() + " error during parsing token"}, http.StatusUnauthorized)
 			return
 		}
 
 		if !token.Valid {
+			respond(w, errorResponse{"token invalid "}, http.StatusUnauthorized)
 			return
 		}
 
 		claims, ok := token.Claims.(jwt.MapClaims)
 		if !ok {
+			respond(w, errorResponse{" error's happen during claims"}, http.StatusUnauthorized)
 			return
 		}
 
 		userUUID, ok := claims["user_uuid"].(string)
 		if !ok {
+			respond(w, errorResponse{" mo uuid during claims "}, http.StatusUnauthorized)
 			return
 		}
 		uuid = "user_uuid"
