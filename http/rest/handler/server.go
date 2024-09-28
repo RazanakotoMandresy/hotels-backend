@@ -40,8 +40,7 @@ func NewServer() (*Server, error) {
 
 	log := NewLogger()
 	router := mux.NewRouter()
-	RegisterRoutes(router, log, database)
-
+	routes(router, log, database)
 	s := Server{
 		logger: log,
 		config: cnf,
