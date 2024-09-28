@@ -2,7 +2,7 @@ package handler
 
 import (
 	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
-	"github.com/RazanakotoMandresy/hotels-backend/middleware"
+	// "github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/google/uuid"
 
 	"net/http"
@@ -31,11 +31,11 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
 		}
-		tokenString, err := middleware.TokenManage(req.Mail, uuids.String())
-		if err != nil {
-			s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
-			return
-		}
-		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
+		// tokenString, err := middleware.TokenManage(req.Mail, uuids.String())
+		// if err != nil {
+		// 	s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
+		// 	return
+		// }
+		s.respond(w, responseUsers{Users: *res, ResString: "tokenString"}, http.StatusOK)
 	}
 }
