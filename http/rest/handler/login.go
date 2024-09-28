@@ -26,9 +26,9 @@ func (s service) Login() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
 		}
-		tokenString, err := middleware.TokenManage(req.Mail, res.UUID.String())
+		tokenString, err := middleware.CreateToken(res.UUID.String(), res.Mail)
 		if err != nil {
-			s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
+			s.respond(w, errorResponse{err.Error() + " token's creation's error"}, http.StatusInternalServerError)
 			return
 		}
 		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
