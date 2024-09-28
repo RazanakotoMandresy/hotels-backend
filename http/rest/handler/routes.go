@@ -9,11 +9,6 @@ import (
 	"github.com/sirupsen/logrus"
 )
 
-//	func authentifiedRoutes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
-//		handler := newHandler(lg, db)
-//		// adding logger middleware
-//		r.Use(middleware.AuthMiddleware, handler.MiddlewareLogger())
-//	}
 func routes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	handler := newHandler(lg, db)
 	// no need to be authentified

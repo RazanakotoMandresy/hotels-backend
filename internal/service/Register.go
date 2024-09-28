@@ -5,8 +5,8 @@ import (
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
-	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/google/uuid"
+	"golang.org/x/crypto/bcrypt"
 )
 
 type RegisterParams struct {
@@ -22,14 +22,17 @@ func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Us
 	}
 	tx, err := s.repo.Db.BeginTx(ctx, nil)
 	if err != nil {
-		return nil, err
+		return nil, err	
 	}
 	defer tx.Rollback()
-	passwd := middleware.HashPassword(params.Password)
+	passwd, err := bcrypt.GenerateFromPassword([]byte(params.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return nil, err
+	}
 	entity := model.Users{
 		Name:      params.Name,
 		Mail:      params.Mail,
-		Passwords: passwd,
+		Passwords: string(passwd),
 		CreatedAt: time.Now().UTC(),
 		UUID:      params.UUID,
 	}

@@ -31,6 +31,6 @@ func (s service) Login() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " token's creation's error"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
+		s.respond(w, responseUsers{Users: res, ResString: tokenString}, http.StatusOK)
 	}
 }

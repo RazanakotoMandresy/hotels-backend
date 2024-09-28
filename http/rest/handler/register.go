@@ -41,6 +41,6 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " token's creation"}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
+		s.respond(w, responseUsers{Users: res, ResString: tokenString}, http.StatusOK)
 	}
 }
