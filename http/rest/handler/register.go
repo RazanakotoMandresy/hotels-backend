@@ -2,6 +2,7 @@ package handler
 
 import (
 	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	// "github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/google/uuid"
 
@@ -20,9 +21,13 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Decode's problems"}, http.StatusBadRequest)
 			return
 		}
-		uuids := uuid.New()
+		if len(req.Passwords) < 8 {
+			s.respond(w, errorResponse{"password too short "}, http.StatusBadRequest)
+			return
+		}
+		userUUUID := uuid.New()
 		res, err := s.services.Register(r.Context(), services.RegisterParams{
-			UUID:     uuids,
+			UUID:     userUUUID,
 			Name:     req.Name,
 			Password: req.Passwords,
 			Mail:     req.Mail,
@@ -31,11 +36,11 @@ func (s service) Register() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)
 			return
 		}
-		// tokenString, err := middleware.TokenManage(req.Mail, uuids.String())
-		// if err != nil {
-		// 	s.respond(w, errorResponse{err.Error() + " Token's creation problem "}, http.StatusInternalServerError)
-		// 	return
-		// }
-		s.respond(w, responseUsers{Users: *res, ResString: "tokenString"}, http.StatusOK)
+		tokenString, err := middleware.CreateToken(userUUUID.String(), req.Mail)
+		if err != nil {
+			s.respond(w, errorResponse{err.Error() + " token's creation"}, http.StatusInternalServerError)
+			return
+		}
+		s.respond(w, responseUsers{Users: *res, ResString: tokenString}, http.StatusOK)
 	}
 }
