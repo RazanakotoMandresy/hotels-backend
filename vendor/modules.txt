@@ -36,6 +36,10 @@ github.com/sirupsen/logrus
 ## explicit; go 1.20
 golang.org/x/crypto/bcrypt
 golang.org/x/crypto/blowfish
+# golang.org/x/oauth2 v0.23.0
+## explicit; go 1.18
+golang.org/x/oauth2
+golang.org/x/oauth2/internal
 # golang.org/x/sys v0.25.0
 ## explicit; go 1.18
 golang.org/x/sys/unix

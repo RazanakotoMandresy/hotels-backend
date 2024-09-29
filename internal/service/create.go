@@ -2,7 +2,9 @@ package service
 
 import (
 	"context"
+	"fmt"
 	// "fmt"
+	"golang.org/x/oauth2"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/asaskevich/govalidator"
@@ -24,6 +26,7 @@ type CreateParams struct {
 func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	// userUUID := ctx.Value("user_uuid").(string)
 	// fmt.Println(userUUID,"dsd")
+	fmt.Println(oauth2.AccessTypeOffline)
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
 	}
