@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	// "fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/asaskevich/govalidator"
@@ -21,6 +22,8 @@ type CreateParams struct {
 }
 
 func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
+	// userUUID := ctx.Value("user_uuid").(string)
+	// fmt.Println(userUUID,"dsd")
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
 	}
@@ -39,6 +42,7 @@ func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels
 		Services:    params.Services,
 		Status:      params.Status,
 		Prix:        params.Prix,
+		// CreatedBy:   fmt.Sprint(userUUID),
 		CreatedAt:   time.Now().UTC(),
 	}
 	err = s.repo.Create(ctx, &entity)
