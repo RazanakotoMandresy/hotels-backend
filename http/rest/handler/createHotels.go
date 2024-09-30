@@ -33,6 +33,7 @@ func (s service) Create() http.HandlerFunc {
 			Created_at:  res.CreatedAt,
 			Prix:        res.Prix,
 			Updated_at:  res.UpdatedAt,
+			CreatedBy : res.CreatedBy,
 		}, http.StatusCreated)
 	}
 }

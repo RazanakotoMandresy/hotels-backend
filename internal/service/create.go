@@ -3,10 +3,12 @@ package service
 import (
 	"context"
 	"fmt"
+
 	// "fmt"
 	"golang.org/x/oauth2"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 	"github.com/lib/pq"
@@ -23,9 +25,12 @@ type CreateParams struct {
 	Ouverture   string `valid:"required"`
 }
 
+var uuids middleware.User_uuid
+
 func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
-	// userUUID := ctx.Value("user_uuid").(string)
-	// fmt.Println(userUUID,"dsd")
+	uuids = "user_uuid"
+	userUUID := ctx.Value(uuids)
+	// just for import oauth2
 	fmt.Println(oauth2.AccessTypeOffline)
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
@@ -45,8 +50,8 @@ func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels
 		Services:    params.Services,
 		Status:      params.Status,
 		Prix:        params.Prix,
-		// CreatedBy:   fmt.Sprint(userUUID),
-		CreatedAt:   time.Now().UTC(),
+		CreatedBy:   fmt.Sprint(userUUID),
+		CreatedAt: time.Now().UTC(),
 	}
 	err = s.repo.Create(ctx, &entity)
 	if err != nil {

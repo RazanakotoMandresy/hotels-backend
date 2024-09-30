@@ -22,6 +22,7 @@ type responsesHotels struct {
 	Status      int        `json:"status"`
 	Prix        uint       `json:"prix"`
 	Created_at  time.Time  `json:"created_at"`
+	CreatedBy   string     `json:"created_by"`
 	Updated_at  *time.Time `json:"updated_at,omitempty"`
 }
 type responseUsers struct {
