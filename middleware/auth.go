@@ -12,12 +12,12 @@ import (
 )
 
 var JWT_SECRET = os.Getenv("JWT_SECRET")
+type User_uuid string
 
 func AuthMiddleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		// cz context.WithValue doesn't accept an type srting only custom type
-		type user_uuid string
-		var uuid user_uuid
+		var uuid User_uuid
 		tokenString := r.Header.Get("Authorization")
 		if tokenString == "" {
 			respond(w, errorResponse{"no token String "}, http.StatusUnauthorized)
