@@ -2,11 +2,13 @@ package service
 
 import (
 	"context"
+	"errors"
 	"time"
 )
 
 func (s Service) Delete(ctx context.Context, uuid string) error {
 	hotels, err := s.Get(ctx, uuid)
+	userUUID := s.getUserUUIDInAuth(ctx)
 	if err != nil {
 		return err
 	}
@@ -17,14 +19,18 @@ func (s Service) Delete(ctx context.Context, uuid string) error {
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
-
+	if userUUID != hotels.CreatedBy {
+		return errors.New("you are not the creator of this hotels")
+	}
 	now := time.Now().UTC()
 	hotels.DeletedAt = &now
 	err = s.repo.Update(ctx, *hotels)
 	if err != nil {
 		return err
 	}
+
 	err = tx.Commit()
+
 	if err != nil {
 		return err
 	}

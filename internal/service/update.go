@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
@@ -28,7 +29,10 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 	if err != nil {
 		return nil, err
 	}
-	
+	userUUID := s.getUserUUIDInAuth(ctx)
+	if userUUID != hotels.CreatedBy {
+		return nil, errors.New("you are not the creator of this hotels")
+	}
 	if params.Name != nil {
 		hotels.Name = *params.Name
 	}
