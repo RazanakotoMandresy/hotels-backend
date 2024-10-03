@@ -15,12 +15,12 @@ func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error
 	}
 	return entity, nil
 }
-func (r Repository) FindByUUID(ctx context.Context, uuid string) (*model.Hotels, error) {
+func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.Hotels, error) {
 	entity := new(model.Hotels)
 	query := "SELECT * FROM hotels WHERE uuid = $1"
 	err := r.Db.GetContext(ctx, entity, query, uuid)
 	if err != nil {
-		return nil, err 
+		return nil, err
 	}
 	return entity, nil
 }
