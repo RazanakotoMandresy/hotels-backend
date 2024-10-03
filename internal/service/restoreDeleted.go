@@ -6,7 +6,7 @@ import (
 )
 
 func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
-	hotels, err := s.repo.FindByUUID(ctx, uuid)
+	hotels, err := s.repo.FindHotelsByUUID(ctx, uuid)
 	if err != nil {
 		return err
 	}
