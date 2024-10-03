@@ -31,6 +31,9 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 		return nil, err
 	}
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
+	if userUUID == "" {
+		return nil, errors.New("no uuid in bearer auth")
+	}
 	if userUUID != hotels.CreatedBy {
 		return nil, errors.New("you are not the creator of this hotels")
 	}

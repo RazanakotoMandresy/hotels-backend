@@ -10,11 +10,13 @@ import (
 
 func (s Service) Delete(ctx context.Context, uuid string) error {
 	hotels, err := s.GetHotel(ctx, uuid)
-	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if err != nil {
 		return err
 	}
-
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
+	if userUUID == "" {
+		return errors.New("no uuid in bearer auth")
+	}
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
 	if err != nil {
 		return err

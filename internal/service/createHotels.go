@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"time"
 
@@ -24,6 +25,9 @@ type CreateParams struct {
 
 func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
+	if userUUID == "" {
+		return nil, errors.New("no uuid in bearer auth")
+	}
 	hotelsUUID := uuid.New()
 	// just for oauth2 can be imported
 	fmt.Println(oauth2.AccessTypeOffline)

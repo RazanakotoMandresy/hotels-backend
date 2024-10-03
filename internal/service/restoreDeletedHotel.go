@@ -18,6 +18,9 @@ func (s Service) RestoreDeletedHotel(ctx context.Context, uuid string) error {
 	}
 	defer tx.Rollback()
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
+	if userUUID == "" {
+		return errors.New("no uuid in bearer auth")
+	}
 	if userUUID != hotels.CreatedBy {
 		return errors.New("you are not the creator of this hotels")
 	}
