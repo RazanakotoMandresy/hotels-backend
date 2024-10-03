@@ -4,11 +4,13 @@ import (
 	"context"
 	"errors"
 	"time"
+
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
 func (s Service) Delete(ctx context.Context, uuid string) error {
 	hotels, err := s.Get(ctx, uuid)
-	userUUID := s.getUserUUIDInAuth(ctx)
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if err != nil {
 		return err
 	}

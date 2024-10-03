@@ -3,12 +3,14 @@ package service
 import (
 	"context"
 	"fmt"
+	"time"
+
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
 	"github.com/lib/pq"
 	"golang.org/x/oauth2"
-	"time"
 )
 
 type CreateParams struct {
@@ -21,7 +23,7 @@ type CreateParams struct {
 }
 
 func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
-	userUUID := s.getUserUUIDInAuth(ctx)
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	hotelsUUID := uuid.New()
 	// just for oauth2 can be imported
 	fmt.Println(oauth2.AccessTypeOffline)

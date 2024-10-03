@@ -2,7 +2,6 @@ package service
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
@@ -17,9 +16,4 @@ func (s Service) Get(ctx context.Context, uuid string) (*model.Hotels, error) {
 	}
 
 	return hotels, nil
-}
-func (s Service) getUserUUIDInAuth(ctx context.Context) string {
-	uuids = "user_uuid"
-	userUUID := ctx.Value(uuids)
-	return fmt.Sprint(userUUID)
 }

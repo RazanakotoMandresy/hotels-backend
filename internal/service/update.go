@@ -6,6 +6,7 @@ import (
 	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/asaskevich/govalidator"
 )
 
@@ -29,7 +30,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 	if err != nil {
 		return nil, err
 	}
-	userUUID := s.getUserUUIDInAuth(ctx)
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if userUUID != hotels.CreatedBy {
 		return nil, errors.New("you are not the creator of this hotels")
 	}

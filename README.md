@@ -1,2 +1,1 @@
-# an HOTELS written in go follow a clean architecute
-## it's just a simple crud app
+## an restfull api of an hotels's reserve

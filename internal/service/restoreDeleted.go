@@ -3,6 +3,8 @@ package service
 import (
 	"context"
 	"errors"
+
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
 func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
@@ -15,7 +17,7 @@ func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
 		return err
 	}
 	defer tx.Rollback()
-	userUUID := s.getUserUUIDInAuth(ctx)
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if userUUID != hotels.CreatedBy {
 		return errors.New("you are not the creator of this hotels")
 	}
