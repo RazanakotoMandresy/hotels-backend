@@ -9,7 +9,7 @@ import (
 )
 
 func (s Service) Delete(ctx context.Context, uuid string) error {
-	hotels, err := s.Get(ctx, uuid)
+	hotels, err := s.GetHotel(ctx, uuid)
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if err != nil {
 		return err

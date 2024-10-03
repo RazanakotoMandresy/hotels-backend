@@ -14,7 +14,7 @@ func (s service) Create() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " decode's problems"}, http.StatusInternalServerError)
 			return
 		}
-		res, err := s.services.Create(r.Context(), services.CreateParams{
+		res, err := s.services.CreateHotel(r.Context(), services.CreateParams{
 			Name:        req.Name,
 			Description: req.Description,
 			Status:      req.Status,

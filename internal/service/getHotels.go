@@ -7,7 +7,7 @@ import (
 )
 
 
-func (s Service) Get(ctx context.Context, uuid string) (*model.Hotels, error) {
+func (s Service) GetHotel(ctx context.Context, uuid string) (*model.Hotels, error) {
 	hotels, err := s.repo.Find(ctx, uuid)
 	if err != nil {
 		return nil, err

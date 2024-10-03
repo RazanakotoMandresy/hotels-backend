@@ -26,7 +26,7 @@ func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels
 		return nil, err
 	}
 	// find hotels object
-	hotels, err := s.Get(ctx, params.UUID)
+	hotels, err := s.GetHotel(ctx, params.UUID)
 	if err != nil {
 		return nil, err
 	}

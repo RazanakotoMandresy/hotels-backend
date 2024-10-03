@@ -14,7 +14,7 @@ func (s service) Get() http.HandlerFunc {
 			s.respond(w, errorResponse{Err: "valid uuid must provide in path"}, http.StatusBadRequest)
 			return
 		}
-		getResponse, err := s.services.Get(r.Context(), numUUID)
+		getResponse, err := s.services.GetHotel(r.Context(), numUUID)
 		if err != nil {
 			s.respond(w, errorResponse{Err: err.Error() + " error on get services"}, http.StatusNotFound)
 			return

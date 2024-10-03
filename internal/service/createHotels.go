@@ -22,7 +22,7 @@ type CreateParams struct {
 	Ouverture   string `valid:"required"`
 }
 
-func (s Service) Create(ctx context.Context, params CreateParams) (*model.Hotels, error) {
+func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	hotelsUUID := uuid.New()
 	// just for oauth2 can be imported

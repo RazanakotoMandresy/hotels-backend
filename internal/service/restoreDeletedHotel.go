@@ -7,7 +7,7 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
-func (s Service) RestoreDeleted(ctx context.Context, uuid string) error {
+func (s Service) RestoreDeletedHotel(ctx context.Context, uuid string) error {
 	hotels, err := s.repo.FindHotelsByUUID(ctx, uuid)
 	if err != nil {
 		return err
