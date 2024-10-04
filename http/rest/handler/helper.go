@@ -20,6 +20,17 @@ func (s service) respond(w http.ResponseWriter, respData interface{}, status int
 		}
 	}
 }
+func (s service) responseFormData(w http.ResponseWriter, respData interface{}, status int) {
+	w.WriteHeader(status)
+	w.Header().Set("Content-Type", "multipart/form-data")
+	if respData != nil {
+		err := json.NewEncoder(w).Encode(respData)
+		if err != nil {
+			http.Error(w, "Could not encode in json", http.StatusBadRequest)
+			return
+		}
+	}
+}
 
 // it does not read to the memory, instead it will read it to the given 'v' interface.
 func (s service) decode(r *http.Request, v interface{}) error {
