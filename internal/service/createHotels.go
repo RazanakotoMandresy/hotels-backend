@@ -61,7 +61,7 @@ func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.H
 		return nil, err
 	}
 	users.ListHotels = append(users.ListHotels, hotelsUUID.String())
-	if err := s.repo.UpdateUser(ctx, *users); err != nil {
+	if err := s.repo.UpdateUser(ctx, users); err != nil {
 		return nil, err
 	}
 	if err := tx.Commit(); err != nil {

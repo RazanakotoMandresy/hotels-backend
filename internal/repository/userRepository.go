@@ -32,7 +32,7 @@ func (r Repository) Login(ctx context.Context, mail string) (*model.Users, error
 	}
 	return entity, nil
 }
-func (r Repository) UpdateUser(ctx context.Context, entity model.Users) error {
+func (r Repository) UpdateUser(ctx context.Context, entity *model.Users) error {
 	query := `UPDATE users SET 
 	name = :name,
 	mail = :mail,

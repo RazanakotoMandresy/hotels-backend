@@ -21,7 +21,7 @@ type UpdateParams struct {
 	UpdatedAt   time.Time
 }
 
-func (s Service) Update(ctx context.Context, params UpdateParams) (*model.Hotels, error) {
+func (s Service) UpdateHotels(ctx context.Context, params UpdateParams) (*model.Hotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
 	}

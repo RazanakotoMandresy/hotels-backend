@@ -17,11 +17,12 @@ func routes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	r.HandleFunc("/hotels/{uuid}", handler.Get()).Methods(http.MethodGet)
 	r.HandleFunc("/users/register", handler.Register()).Methods(http.MethodPost)
 	r.HandleFunc("/users/login", handler.Login()).Methods(http.MethodPost)
+	// r.HandleFunc("/upl", handler.UploadImages()).Methods(http.MethodPost)
 	private := r.PathPrefix("/").Subrouter()
 	private.Use(middleware.AuthMiddleware, handler.MiddlewareLogger())
+	private.HandleFunc("/upload/{uuid}", handler.UploadImages()).Methods(http.MethodPost)
 	private.HandleFunc("/hotels", handler.Create()).Methods(http.MethodPost)
 	private.HandleFunc("/hotels/{uuid}", handler.Update()).Methods(http.MethodPut)
 	private.HandleFunc("/hotels/restore/{uuid}", handler.RestoreDeleted()).Methods(http.MethodPut)
 	private.HandleFunc("/hotels/{uuid}", handler.Delete()).Methods(http.MethodDelete)
-
 }

@@ -16,14 +16,13 @@ func (s service) Update() http.HandlerFunc {
 			s.respond(w, errorResponse{" valid uuid must provide in path"}, http.StatusBadRequest)
 			return
 		}
-
 		req := new(fullRequest)
 		if err := s.decode(r, &req); err != nil {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
 
-		res, err := s.services.Update(r.Context(), services.UpdateParams{
+		res, err := s.services.UpdateHotels(r.Context(), services.UpdateParams{
 			UUID:        uuid,
 			Name:        &req.Name,
 			Description: &req.Description,

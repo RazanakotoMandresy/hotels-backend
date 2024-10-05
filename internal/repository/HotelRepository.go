@@ -48,7 +48,8 @@ func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
                     status = :status, 
                     created_at = :created_at, 
                     updated_at = :updated_at, 
-                    deleted_at = :deleted_at
+                    deleted_at = :deleted_at,
+					images = :images
                 WHERE uuid = :uuid;`
 	_, err := r.Db.NamedExecContext(ctx, query, entity)
 	return err
