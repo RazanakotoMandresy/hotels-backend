@@ -2,9 +2,7 @@ package service
 
 import (
 	"context"
-	"fmt"
 	"io"
-	"math/rand"
 	"net/http"
 	"os"
 )
@@ -21,12 +19,12 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Req
 		return "", err
 	}
 	defer file.Close()
-	newFilename := handler.Filename + string(rand.Int())
-	fmt.Println(newFilename)
-	f, err := os.OpenFile(handler.Filename, os.O_WRONLY|os.O_CREATE, 06666)
+	newFilename := handler.Filename
+	f, err := os.OpenFile(newFilename, os.O_WRONLY|os.O_CREATE, 06666)
 	if err != nil {
 		return "", err
-	}	
+	}
+
 	if _, err := io.Copy(f, file); err != nil {
 		return "", err
 	}
@@ -34,5 +32,5 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Req
 	if err := s.repo.Update(ctx, *hotels); err != nil {
 		return "", err
 	}
-	return handler.Filename, nil
+	return newFilename, nil
 }
