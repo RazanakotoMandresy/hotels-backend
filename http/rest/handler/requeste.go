@@ -10,3 +10,6 @@ type fullRequest struct {
 	Ouverture   string   `json:"ouverture"`
 }
 
+type fileNameReq struct {
+	FileName string `json:"filename"`
+}

@@ -9,8 +9,7 @@ import (
 func (s service) Create() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		req := new(fullRequest)
-		err := s.decode(r, &req)
-		if err != nil {
+		if err := s.decode(r, &req); err != nil {
 			s.respond(w, errorResponse{err.Error() + " decode's problems"}, http.StatusInternalServerError)
 			return
 		}
@@ -33,7 +32,7 @@ func (s service) Create() http.HandlerFunc {
 			Created_at:  res.CreatedAt,
 			Prix:        res.Prix,
 			Updated_at:  res.UpdatedAt,
-			CreatedBy : res.CreatedBy,
+			CreatedBy:   res.CreatedBy,
 		}, http.StatusCreated)
 	}
 }
