@@ -2,9 +2,14 @@ package service
 
 import (
 	"context"
+	"fmt"
+	"math/rand"
+
+	// "crypto/rand"
 	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Request) (string, error) {
@@ -12,19 +17,17 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Req
 	if err != nil {
 		return "", err
 	}
-	// max memory
-	r.ParseMultipartForm(32 << 20)
 	file, handler, err := r.FormFile("file")
 	if err != nil {
 		return "", err
 	}
 	defer file.Close()
-	newFilename := handler.Filename
+	splitedName := strings.Split(handler.Filename, ".")
+	newFilename := splitedName[0] + hotelUUID + fmt.Sprint(rand.Int()) + "." + splitedName[1]
 	f, err := os.OpenFile(newFilename, os.O_WRONLY|os.O_CREATE, 06666)
 	if err != nil {
 		return "", err
 	}
-
 	if _, err := io.Copy(f, file); err != nil {
 		return "", err
 	}
