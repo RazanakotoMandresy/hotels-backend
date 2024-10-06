@@ -4,23 +4,20 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
+	"mime/multipart"
 
 	"io"
-	"net/http"
 	"os"
 	"strings"
 )
 
-func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Request) (string, error) {
+func (s Service) UploadImages(ctx context.Context, hotelUUID string, files chan multipart.File, handlers chan *multipart.FileHeader) (string, error) {
 	hotels, err := s.GetHotel(ctx, hotelUUID)
 	if err != nil {
 		return "", err
 	}
-	file, handler, err := r.FormFile("file")
-	if err != nil {
-		return "", err
-	}
-	defer file.Close()
+	handler := <- handlers
+	file:= <-files
 	splitedName := strings.Split(handler.Filename, ".")
 	destFile := "./uploads/" + splitedName[0] + hotelUUID + fmt.Sprint(rand.Int()) + "." + splitedName[1]
 	out, err := os.Create(destFile)
@@ -35,5 +32,5 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, r *http.Req
 	if err := s.repo.Update(ctx, *hotels); err != nil {
 		return "", err
 	}
-	return destFile, nil
+	return "destFile", nil
 }

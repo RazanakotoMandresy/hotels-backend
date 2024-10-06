@@ -72,11 +72,9 @@ func (s service) MiddlewareLogger() func(http.Handler) http.Handler {
             s.restoreRequestBody(r, requestBody)
 
             logMessage := fmt.Sprintf("path:%s, method: %s, requestBody: %v", r.URL.EscapedPath(), r.Method, string(requestBody))
-
             start := time.Now()
             wrapped := wrapResponseWriter(w)
             next.ServeHTTP(wrapped, r)
-
             logMessage = fmt.Sprintf("%s, responseStatus: %d, responseBody: %s", logMessage, wrapped.Status(), string(wrapped.Body()))
             s.logger.Infof("%s, duration: %v", logMessage, time.Since(start))
         }
