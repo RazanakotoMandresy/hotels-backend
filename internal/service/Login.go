@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
@@ -26,9 +27,12 @@ func (s Service) Login(ctx context.Context, params LoginParams) (*model.Users, e
 	if err != nil {
 		return nil, err
 	}
-	err = middleware.VerifyPassword(users.Passwords, params.Password)
+	decriptedPassword, err := middleware.Decrypt(users.Passwords)
 	if err != nil {
 		return nil, err
+	}
+	if decriptedPassword !=  params.Password{
+		return nil, errors.New("bad passwords please retry")
 	}
 	err = tx.Commit()
 	if err != nil {
