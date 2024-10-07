@@ -1,1 +1,1 @@
-## an restfull api of an hotels's reserve
+## an restfull api of an hotels's reservation
