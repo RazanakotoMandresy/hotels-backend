@@ -11,13 +11,12 @@ import (
 	"strings"
 )
 
-func (s Service) UploadImages(ctx context.Context, hotelUUID string, files chan multipart.File, handlers chan *multipart.FileHeader) (string, error) {
+func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multipart.File, handler *multipart.FileHeader) (string, error) {
 	hotels, err := s.GetHotel(ctx, hotelUUID)
 	if err != nil {
 		return "", err
 	}
-	handler := <- handlers
-	file:= <-files
+
 	splitedName := strings.Split(handler.Filename, ".")
 	destFile := "./uploads/" + splitedName[0] + hotelUUID + fmt.Sprint(rand.Int()) + "." + splitedName[1]
 	out, err := os.Create(destFile)
