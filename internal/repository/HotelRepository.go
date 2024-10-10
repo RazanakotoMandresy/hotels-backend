@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 )
@@ -15,6 +16,8 @@ func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error
 	}
 	return entity, nil
 }
+
+// find only by uuid but without even it was deleted
 func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.Hotels, error) {
 	entity := new(model.Hotels)
 	query := "SELECT * FROM hotels WHERE uuid = $1"
@@ -23,6 +26,16 @@ func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.H
 		return nil, err
 	}
 	return entity, nil
+}
+func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hotels, error) {
+	var entity []model.Hotels
+	pattern := fmt.Sprintf(".*%s.*", search)
+	query := "SELECT * FROM hotels WHERE name = $1"
+	err := r.Db.GetContext(ctx, entity, query, pattern)
+	if err != nil {
+		return nil, err
+	}
+	return entity, err
 }
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
 	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, status,created_by ,  created_at, updated_at)
