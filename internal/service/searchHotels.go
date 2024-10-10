@@ -1,9 +1,9 @@
 package service
 
 import (
-	"context"
-
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+
+	"context"
 )
 
 func (s Service) SearchHotels(ctx context.Context, searched string) ([]model.Hotels, error) {
@@ -11,5 +11,6 @@ func (s Service) SearchHotels(ctx context.Context, searched string) ([]model.Hot
 	if err != nil {
 		return nil, err
 	}
+
 	return usersFound, nil
 }
