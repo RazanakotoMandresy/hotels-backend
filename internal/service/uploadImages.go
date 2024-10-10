@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"fmt"
 	"math/rand"
 	"mime/multipart"
@@ -26,6 +27,9 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	defer out.Close()
 	if _, err := io.Copy(out, file); err != nil {
 		return "", err
+	}
+	if len(hotels.Images) > 8 {
+		return "", errors.New("8 images per hotels maximum")
 	}
 	hotels.Images = append(hotels.Images, handler.Filename)
 	if err := s.repo.Update(ctx, *hotels); err != nil {
