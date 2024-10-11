@@ -24,8 +24,6 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	if len(hotels.Images) > 8 {
 		return "", errors.New("8 images per hotels maximum")
 	}
-	// ignoring the errors
-	os.Mkdir("uploads", os.ModePerm)
 	splitedName := strings.Split(handler.Filename, ".")
 	destFile := "./uploads/" + splitedName[0] + hotelUUID + "." + splitedName[1]
 	out, err := os.Create(destFile)
