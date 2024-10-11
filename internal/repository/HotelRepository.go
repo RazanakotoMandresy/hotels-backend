@@ -2,6 +2,7 @@ package repository
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 )
@@ -15,6 +16,8 @@ func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error
 	}
 	return entity, nil
 }
+
+// find only by uuid but without even it was deleted
 func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.Hotels, error) {
 	entity := new(model.Hotels)
 	query := "SELECT * FROM hotels WHERE uuid = $1"
@@ -24,6 +27,7 @@ func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.H
 	}
 	return entity, nil
 }
+
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
 	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, status,created_by ,  created_at, updated_at)
                 VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :status,:created_by,:created_at, :updated_at) RETURNING uuid;`
@@ -60,4 +64,15 @@ func (r Repository) FindAll(ctx context.Context) ([]model.Hotels, error) {
 	query := "SELECT * FROM hotels WHERE deleted_at IS NULL"
 	err := r.Db.SelectContext(ctx, &entities, query)
 	return entities, err
+}
+func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hotels, error) {
+	entity := new([]model.Hotels)
+	fmt.Println(search)
+	pattern := fmt.Sprint("%" + search + "%")
+	err := r.Db.SelectContext(ctx, entity, "SELECT * FROM hotels WHERE name LIKE $1", pattern)
+	fmt.Println(err)
+	if err != nil {
+		return nil, err
+	}
+	return *entity, err
 }

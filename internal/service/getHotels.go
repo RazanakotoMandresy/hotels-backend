@@ -7,8 +7,8 @@ import (
 )
 
 
-func (s Service) GetHotel(ctx context.Context, uuid string) (*model.Hotels, error) {
-	hotels, err := s.repo.Find(ctx, uuid)
+func (s Service) GetHotel(ctx context.Context, uuidOrName string) (*model.Hotels, error) {
+	hotels, err := s.repo.Find(ctx, uuidOrName)
 	if err != nil {
 		return nil, err
 	}
