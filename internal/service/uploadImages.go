@@ -3,13 +3,13 @@ package service
 import (
 	"context"
 	"errors"
-	"fmt"
-	"math/rand"
-	"mime/multipart"
 
 	"io"
+	"mime/multipart"
 	"os"
 	"strings"
+
+	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
 func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multipart.File, handler *multipart.FileHeader) (string, error) {
@@ -17,11 +17,17 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	if err != nil {
 		return "", err
 	}
+	userUUID := middleware.GetUserUUIDInAuth(ctx)
+	if userUUID != hotels.CreatedBy {
+		return "", errors.New("you are not the creator of this hotels")
+	}
 	if len(hotels.Images) > 8 {
 		return "", errors.New("8 images per hotels maximum")
 	}
+	// ignoring the errors
+	os.Mkdir("uploads", os.ModePerm)
 	splitedName := strings.Split(handler.Filename, ".")
-	destFile := "./uploads/" + splitedName[0] + hotelUUID + fmt.Sprint(rand.Int()) + "." + splitedName[1]
+	destFile := "./uploads/" + splitedName[0] + hotelUUID + "." + splitedName[1]
 	out, err := os.Create(destFile)
 	if err != nil {
 		return "", err
@@ -35,5 +41,5 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	if err := s.repo.Update(ctx, *hotels); err != nil {
 		return "", err
 	}
-	return "destFile", nil
+	return "", nil
 }
