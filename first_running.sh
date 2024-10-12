@@ -5,7 +5,7 @@ if you have some issues please contact RazanakotoMandresy 🗿 😉 \n
 this script is  used if it's the first time you want to run hotel's api in your pc 🖥️💻\n
 first let's configure the database ⚙️  \n
 enter your name in your postgres db \n 
-enter d for the default postgres username \n"
+press on "d" for the default postgres username \n"
 read userDb
 echo "enter your  postgres db passwords"
 read dbPassword
