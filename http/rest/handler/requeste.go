@@ -8,5 +8,5 @@ type fullRequest struct {
 	Prix        uint     `json:"prix"`
 	Status      int      `json:"status"`
 	Ouverture   string   `json:"ouverture"`
+	Place       string   `json:"place"`
 }
-

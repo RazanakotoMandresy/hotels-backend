@@ -19,6 +19,7 @@ func (s service) Create() http.HandlerFunc {
 			Status:      req.Status,
 			Ouverture:   req.Ouverture,
 			Prix:        req.Prix,
+			Place:       req.Place,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " error on happen on the create handler from services"}, http.StatusInternalServerError)

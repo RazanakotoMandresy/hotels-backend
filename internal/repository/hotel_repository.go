@@ -29,8 +29,8 @@ func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.H
 }
 
 func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
-	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, status,created_by ,  created_at, updated_at)
-                VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :status,:created_by,:created_at, :updated_at) RETURNING uuid;`
+	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, place,status,created_by ,  created_at, updated_at)
+                VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :place,:status,:created_by,:created_at, :updated_at) RETURNING uuid;`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
 	if err != nil {
 		return err

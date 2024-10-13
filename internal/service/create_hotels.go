@@ -21,6 +21,7 @@ type CreateParams struct {
 	Prix        uint   `valid:"required"`
 	Status      int    `valid:"required"`
 	Ouverture   string `valid:"required"`
+	Place       string `valid:"required"`
 }
 
 func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.Hotels, error) {
@@ -54,6 +55,7 @@ func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.H
 		Services:    params.Services,
 		Status:      params.Status,
 		Prix:        params.Prix,
+		Place:       params.Place,
 		CreatedBy:   userUUID,
 		CreatedAt:   time.Now().UTC(),
 	}
