@@ -19,7 +19,7 @@ type CreateParams struct {
 	Description string `valid:"required"`
 	Services    pq.StringArray
 	Prix        uint   `valid:"required"`
-	Status      int    `valid:"required"`
+	Status      bool   
 	Ouverture   string `valid:"required"`
 	Place       string `valid:"required"`
 }

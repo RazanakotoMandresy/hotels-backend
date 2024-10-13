@@ -13,7 +13,7 @@ type Hotels struct {
 	Description string         `db:"description"`
 	Services    pq.StringArray `db:"services"`
 	Prix        uint           `db:"prix"`
-	Status      int            `db:"status"`
+	Status      bool           `db:"status"`
 	Place       string         `db:"place"`
 	Ouverture   string         `db:"ouverture"`
 	CreatedBy   string         `db:"created_by"`

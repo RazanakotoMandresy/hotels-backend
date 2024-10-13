@@ -6,7 +6,7 @@ type fullRequest struct {
 	Description string   `json:"description"`
 	Service     []string `json:"service"`
 	Prix        uint     `json:"prix"`
-	Status      int      `json:"status"`
+	Status      bool     `json:"status"`
 	Ouverture   string   `json:"ouverture"`
 	Place       string   `json:"place"`
 }

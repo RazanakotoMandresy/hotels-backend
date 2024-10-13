@@ -16,7 +16,7 @@ type UpdateParams struct {
 	Name        *string
 	Description *string
 	Prix        *uint
-	Status      *int
+	Status      *bool
 	Ouverture   *string
 	UpdatedAt   time.Time
 }

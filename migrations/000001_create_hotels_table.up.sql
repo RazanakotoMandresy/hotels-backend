@@ -7,7 +7,8 @@ CREATE TABLE
         ouverture TEXT NOT NULL,
         created_by TEXT NOT NULL,
         prix BIGINT,
-        status SMALLINT,
+        -- status will be an boolean is open or not 
+        status BOOLEAN,
         services TEXT[],
         images TEXT[],
         created_at TIMESTAMP(0) WITHOUT TIME ZONE NOT NULL,
