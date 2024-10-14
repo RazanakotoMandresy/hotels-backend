@@ -8,10 +8,7 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
-type LoginParams struct {
-	Mail     string `valid:"required"`
-	Password string `valid:"required"`
-}
+
 
 func (s Service) Login(ctx context.Context, params LoginParams) (*model.Users, error) {
 	if err := authValidator(params.Mail, params); err != nil {

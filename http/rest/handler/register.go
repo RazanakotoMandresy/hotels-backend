@@ -3,7 +3,6 @@ package handler
 import (
 	services "github.com/RazanakotoMandresy/hotels-backend/internal/service"
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
-	// "github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/google/uuid"
 
 	"net/http"

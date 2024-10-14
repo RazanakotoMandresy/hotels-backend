@@ -10,19 +10,10 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 	"github.com/asaskevich/govalidator"
 	"github.com/google/uuid"
-	"github.com/lib/pq"
 	"golang.org/x/oauth2"
 )
 
-type CreateParams struct {
-	Name        string `valid:"required"`
-	Description string `valid:"required"`
-	Services    pq.StringArray
-	Prix        uint   `valid:"required"`
-	Status      bool   
-	Ouverture   string `valid:"required"`
-	Place       string `valid:"required"`
-}
+
 
 func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	userUUID := middleware.GetUserUUIDInAuth(ctx)

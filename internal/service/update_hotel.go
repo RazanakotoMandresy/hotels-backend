@@ -11,15 +11,6 @@ import (
 )
 
 // no need services here
-type UpdateParams struct {
-	UUID        string `valid:"required"`
-	Name        *string
-	Description *string
-	Prix        *uint
-	Status      *bool
-	Ouverture   *string
-	UpdatedAt   time.Time
-}
 
 func (s Service) UpdateHotels(ctx context.Context, params UpdateParams) (*model.Hotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {

@@ -6,15 +6,7 @@ import (
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
-	"github.com/google/uuid"
 )
-
-type RegisterParams struct {
-	Name     string `valid:"required"`
-	Mail     string `valid:"required"`
-	Password string `valid:"required"`
-	UUID     uuid.UUID
-}
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
 	if err := authValidator(params.Mail, params); err != nil {
