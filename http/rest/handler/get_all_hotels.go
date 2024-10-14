@@ -9,6 +9,6 @@ func (s service) GetAll() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, arrayHotels{*hotels}, http.StatusOK)
+		s.respond(w, arrayHotelsResponse{*hotels}, http.StatusOK)
 	}
 }

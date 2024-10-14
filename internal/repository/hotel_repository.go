@@ -67,7 +67,6 @@ func (r Repository) FindAll(ctx context.Context) ([]model.Hotels, error) {
 }
 func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
-	fmt.Println(search)
 	pattern := fmt.Sprint("%" + search + "%")
 	err := r.Db.SelectContext(ctx, entity, "SELECT * FROM hotels WHERE name LIKE $1", pattern)
 	fmt.Println(err)
@@ -75,4 +74,20 @@ func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hot
 		return nil, err
 	}
 	return *entity, err
+}
+func (r Repository) FilterHotels(ctx context.Context, name, Ouverture,
+	Place string,
+	Service []string,
+	Prix uint) ([]model.Hotels, error) {
+	entity := new([]model.Hotels)
+	ouverture := fmt.Sprint("%" + Ouverture + "%")
+	place := fmt.Sprint("%" + Place + "%")
+	service := fmt.Sprint("%" + Service[0] + "%")
+	// prix := fmt.Sprint("%" + string(Prix) + "%")
+	// prix tsy like ... fa genre ze prix akaiky azy indrindra chiffre akaiky na ambony na ambany
+	err := r.Db.SelectContext(ctx, entity, "SELECT * FROM hotels WHERE name LIKE $1 ouverture LIKE $2 place LIKE $3 service LIKE $4", name, ouverture, place, service)
+	if err != nil {
+		return nil, err
+	}
+	return *entity, nil
 }

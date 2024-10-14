@@ -16,6 +16,6 @@ func (s service) SearchHotels() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error()}, http.StatusNotFound)
 			return
 		}
-		s.respond(w, arrayHotels{hotels}, http.StatusOK)
+		s.respond(w, arrayHotelsResponse{hotels}, http.StatusOK)
 	}
 }

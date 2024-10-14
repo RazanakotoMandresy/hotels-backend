@@ -7,13 +7,14 @@ import (
 type errorResponse struct {
 	Err string `json:"err"`
 }
-type arrayHotels struct {
+type arrayHotelsResponse struct {
 	Res []model.Hotels `json:"res"`
 }
 
 type responseUsers struct {
-	Users     *model.Users `json:"user"`
-	ResString string       `json:"res"`
+	Users *model.Users `json:"user"`
+	// Resstring most of the time will be the token
+	ResString string `json:"res"`
 }
 type responseString struct {
 	Res string `json:"res"`
