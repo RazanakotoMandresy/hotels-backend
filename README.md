@@ -1,8 +1,16 @@
-# An restfull api of an hotels's reservation
+<h1 align="center"> <i>An restfull api of an hotels's reservation </i></h1>
 
-## Configuring the database
+# if it's the the first time you want to run the app
 
-<p> export your postgres url </p>
+## using the script sh
+
+```bash
+$ sh first_running.sh
+```
+
+## manual configuration
+
+<i> export your postgres url </i>
 
 ```bash
 $ export POSTGRESQL_URL='postgres://postgres:yourpasssword@localhost:5432/the_name_of_the_db?sslmode=disable'
