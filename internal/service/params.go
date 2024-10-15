@@ -37,10 +37,9 @@ type UpdateParams struct {
 	UpdatedAt   time.Time
 }
 type FilterParams struct {
-	UUID      string   `valid:"required"`
-	Name      string   `json:"name"`
-	Ouverture string   `json:"ouverture"`
-	Place     string   `json:"place"`
-	Service   []string `json:"service"`
-	Prix      uint     `json:"prix"`
+	Name      string
+	Ouverture string
+	Place     string
+	Service   string
+	Prix      uint
 }

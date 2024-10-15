@@ -13,16 +13,9 @@ func (s Service) FilterHotels(ctx context.Context, params FilterParams) ([]model
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
 	}
-	hotels, err := s.GetHotel(ctx, params.UUID)
-	if err != nil {
-		return nil, err
-	}
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if userUUID == "" {
 		return nil, errors.New("no uuid in bearer auth")
-	}
-	if userUUID != hotels.CreatedBy {
-		return nil, errors.New("you are not the creator of this hotels")
 	}
 	hotelsFilterd, err := s.repo.FilterHotels(ctx, params.Name, params.Ouverture, params.Place, params.Service, params.Prix)
 	if err != nil {

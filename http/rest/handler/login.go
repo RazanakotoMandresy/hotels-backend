@@ -8,19 +8,16 @@ import (
 )
 
 func (s service) Login() http.HandlerFunc {
-	type loginReq struct {
-		Mail     string `json:"mail"`
-		Password string `json:"passwords"`
-	}
+
 	return func(w http.ResponseWriter, r *http.Request) {
-		req := new(loginReq)
+		req := new(userReq)
 		if err := s.decode(r, req); err != nil {
 			s.respond(w, errorResponse{err.Error() + " Decode's problems"}, http.StatusBadRequest)
 			return
 		}
 		res, err := s.services.Login(r.Context(), services.LoginParams{
 			Mail:     req.Mail,
-			Password: req.Password,
+			Password: req.Passwords,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " Services register error"}, http.StatusInternalServerError)

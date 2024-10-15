@@ -12,9 +12,10 @@ import (
 func routes(r *mux.Router, lg *logrus.Logger, db *sqlx.DB) {
 	handler := newHandler(lg, db)
 	// no need to be authentified
+	// r.PathPrefix("/api/v1").Subrouter()
 	r.Use(handler.MiddlewareLogger())
 	r.HandleFunc("/hotels", handler.GetAll()).Methods(http.MethodGet)
-	r.HandleFunc("/hotels/fiter", handler.filterHotels()).Methods(http.MethodGet)
+	r.HandleFunc("/hotels/filter", handler.filterHotels()).Methods(http.MethodGet)
 	r.HandleFunc("/hotels/search", handler.SearchHotels()).Methods(http.MethodGet)
 	r.HandleFunc("/hotels/{uuid}", handler.Get()).Methods(http.MethodGet)
 	r.HandleFunc("/users/register", handler.Register()).Methods(http.MethodPost)

@@ -5,6 +5,7 @@ import (
 	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
+	"github.com/lib/pq"
 )
 
 func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error) {
@@ -77,15 +78,17 @@ func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hot
 }
 func (r Repository) FilterHotels(ctx context.Context, name, Ouverture,
 	Place string,
-	Service []string,
+	Service string,
 	Prix uint) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
 	ouverture := fmt.Sprint("%" + Ouverture + "%")
 	place := fmt.Sprint("%" + Place + "%")
-	service := fmt.Sprint("%" + Service[0] + "%")
-	// prix := fmt.Sprint("%" + string(Prix) + "%")
-	// prix tsy like ... fa genre ze prix akaiky azy indrindra chiffre akaiky na ambony na ambany
-	err := r.Db.SelectContext(ctx, entity, "SELECT * FROM hotels WHERE name LIKE $1 ouverture LIKE $2 place LIKE $3 service LIKE $4", name, ouverture, place, service)
+	err := r.Db.SelectContext(ctx, entity,
+		`SELECT * FROM hotels WHERE name LIKE $1
+ 		AND ouverture LIKE $2
+  		AND place LIKE $3
+		AND ($4::text[] IS NULL OR services @> $4::text[]) 
+   		AND ($5 = OR prix <= $5)`, name, ouverture, place, pq.Array(Service), Prix)
 	if err != nil {
 		return nil, err
 	}
