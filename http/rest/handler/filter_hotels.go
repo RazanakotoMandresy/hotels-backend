@@ -23,6 +23,6 @@ func (s service) filterHotels() http.HandlerFunc {
 			s.respond(w, errorResponse{err.Error() + " services error "}, http.StatusInternalServerError)
 			return
 		}
-		s.respond(w, arrayHotelsResponse{hotels}, http.StatusOK)
+		s.respond(w, hotels, http.StatusOK)
 	}
 }

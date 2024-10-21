@@ -75,22 +75,11 @@ func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hot
 	}
 	return *entity, err
 }
-func (r Repository) FilterHotels(ctx context.Context, name, Ouverture, Place, Service string, Prix uint) ([]model.Hotels, error) {
+func (r Repository) Filter(ctx context.Context, condFilter, column string) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
-	ouverture := fmt.Sprint("%" + Ouverture + "%")
-	place := fmt.Sprint("%" + Place + "%")
-	// TODO implements a real sort services
-	query := `
-	SELECT * FROM hotels
-	WHERE name ILIKE $1
-	AND ouverture ILIKE $2
-	AND place ILIKE $3
-	AND ($4 = '' OR EXISTS (
-		SELECT 1 FROM unnest(services) AS s WHERE s ILIKE $4
-	))
-	AND ($5 = 0 OR prix <= $5)`
-
-	err := r.Db.SelectContext(ctx, entity, query, name, ouverture, place,Service, Prix)
+	matche := fmt.Sprint("%" + condFilter + "%")
+	query := fmt.Sprintf(`SELECT * FROM hotels WHERE %v LIKE $1`, column)
+	err := r.Db.SelectContext(ctx, entity, query, matche)
 	if err != nil {
 		return nil, err
 	}
