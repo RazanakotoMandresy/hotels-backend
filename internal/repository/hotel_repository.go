@@ -5,7 +5,6 @@ import (
 	"fmt"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
-	"github.com/lib/pq"
 )
 
 func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error) {
@@ -76,19 +75,22 @@ func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hot
 	}
 	return *entity, err
 }
-func (r Repository) FilterHotels(ctx context.Context, name, Ouverture,
-	Place string,
-	Service string,
-	Prix uint) ([]model.Hotels, error) {
+func (r Repository) FilterHotels(ctx context.Context, name, Ouverture, Place, Service string, Prix uint) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
 	ouverture := fmt.Sprint("%" + Ouverture + "%")
 	place := fmt.Sprint("%" + Place + "%")
-	err := r.Db.SelectContext(ctx, entity,
-		`SELECT * FROM hotels WHERE name LIKE $1
- 		AND ouverture LIKE $2
-  		AND place LIKE $3
-		AND ($4::text[] IS NULL OR services @> $4::text[]) 
-   		AND ($5 = OR prix <= $5)`, name, ouverture, place, pq.Array(Service), Prix)
+	// TODO implements a real sort services
+	query := `
+	SELECT * FROM hotels
+	WHERE name ILIKE $1
+	AND ouverture ILIKE $2
+	AND place ILIKE $3
+	AND ($4 = '' OR EXISTS (
+		SELECT 1 FROM unnest(services) AS s WHERE s ILIKE $4
+	))
+	AND ($5 = 0 OR prix <= $5)`
+
+	err := r.Db.SelectContext(ctx, entity, query, name, ouverture, place,Service, Prix)
 	if err != nil {
 		return nil, err
 	}

@@ -10,7 +10,8 @@ type fullRequest struct {
 	Ouverture   string   `json:"ouverture"`
 	Place       string   `json:"place"`
 }
-// notes ny ouverture date TODO de raha asiana front-end de de mampiasa input type date
+
+// notes ny ouvrture date TODO de raha asiana front-end de de mampiasa input type date
 type filterRequest struct {
 	Name      string `json:"name"`
 	Ouverture string `json:"ouverture"`
