@@ -9,15 +9,15 @@ import (
 	"github.com/asaskevich/govalidator"
 )
 
-// type resFilter struct {
-// 	Name      string
-// 	Ouverture string
-// 	Place     string
-// 	Services  string
-// 	Prix      uint
-// }
+type filterResHotels struct {
+	MatchedName      []model.Hotels `json:"matched_name"`
+	MatchedPlace     []model.Hotels `json:"matched_place"`
+	MatchedOuverture []model.Hotels `json:"matched_ouverture"`
+	MatchedServie    []model.Hotels `json:"matched_service"`
+	MatchedPrice     []model.Hotels `json:"matched_price"`
+}
 
-func (s Service) FilterHotels(ctx context.Context, params FilterParams) ([][]model.Hotels, error) {
+func (s Service) FilterHotels(ctx context.Context, params FilterParams) ([]filterResHotels, error) {
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
 	}
@@ -31,28 +31,28 @@ func (s Service) FilterHotels(ctx context.Context, params FilterParams) ([][]mod
 	}
 	return res, nil
 }
-func (p FilterParams) checkParams(ctx context.Context, s Service) ([][]model.Hotels, error) {
-	var arrOfarrHotels = [][]model.Hotels{}
-	if p.Name != "" {
-		hotels, err := s.repo.Filter(ctx, p.Name, "name")
+func (f FilterParams) checkParams(ctx context.Context, s Service) ([]filterResHotels, error) {
+	var arrFiltedHotel []filterResHotels
+	if f.Name != "" {
+		hotels, err := s.repo.Filter(ctx, f.Name, "name")
 		if err != nil {
 			return nil, err
 		}
-		arrOfarrHotels = append(arrOfarrHotels, hotels)
+		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedName: hotels})
 	}
-	if p.Place != "" {
-		hotels, err := s.repo.Filter(ctx, p.Place, "place")
+	if f.Place != "" {
+		hotels, err := s.repo.Filter(ctx, f.Place, "place")
 		if err != nil {
 			return nil, err
 		}
-		arrOfarrHotels = append(arrOfarrHotels, hotels)
+		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedPlace: hotels})
 	}
-	if p.Ouverture != "" {
-		hotels, err := s.repo.Filter(ctx, p.Ouverture, "ouverture")
+	if f.Ouverture != "" {
+		hotels, err := s.repo.Filter(ctx, f.Ouverture, "ouverture")
 		if err != nil {
 			return nil, err
 		}
-		arrOfarrHotels = append(arrOfarrHotels, hotels)
+		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedOuverture: hotels})
 	}
-	return arrOfarrHotels, nil
+	return arrFiltedHotel, nil
 }
