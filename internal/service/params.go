@@ -41,5 +41,6 @@ type FilterParams struct {
 	Ouverture string
 	Place     string
 	Service   string
-	Prix      uint
+	MinBudget uint
+	MaxBudget uint
 }

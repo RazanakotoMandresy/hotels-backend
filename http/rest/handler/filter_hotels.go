@@ -14,10 +14,11 @@ func (s service) filterHotels() http.HandlerFunc {
 		}
 		hotels, err := s.services.FilterHotels(r.Context(), services.FilterParams{
 			Name:      req.Name,
-			Prix:      req.Prix,
 			Place:     req.Place,
 			Service:   req.Service,
 			Ouverture: req.Ouverture,
+			MinBudget: req.MinBudget,
+			MaxBudget: req.MaxBudget,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " services error "}, http.StatusInternalServerError)

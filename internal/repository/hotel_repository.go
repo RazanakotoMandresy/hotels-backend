@@ -85,3 +85,11 @@ func (r Repository) Filter(ctx context.Context, condFilter, column string) ([]mo
 	}
 	return *entity, nil
 }
+func (r Repository) FilterPrice(ctx context.Context, minBudget, maxBudget uint) ([]model.Hotels, error) {
+	entity := new([]model.Hotels)
+	query := fmt.Sprintf(`SELECT * FROM hotels WHERE prix >= %v AND prix <= %v AND deleted_at IS NULL `, minBudget, maxBudget)
+	if err := r.Db.SelectContext(ctx, entity, query); err != nil {
+		return nil, err
+	}
+	return *entity, nil
+}

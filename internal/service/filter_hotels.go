@@ -48,5 +48,16 @@ func (f FilterParams) checkParams(ctx context.Context, s Service) ([]filterResHo
 		}
 		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedOuverture: hotels})
 	}
+	// check if min and max are both not equal to zero
+	if (f.MinBudget * f.MaxBudget) != 0 {
+		// handle the price matching
+		hotels, err := s.repo.FilterPrice(ctx, f.MinBudget, f.MaxBudget)
+		if err != nil {
+			return nil, err
+		}
+		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedPrice: hotels})
+	}
+	// if f.Service != "" {
+	// }
 	return arrFiltedHotel, nil
 }
