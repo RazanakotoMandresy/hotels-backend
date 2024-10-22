@@ -12,12 +12,12 @@ type fullRequest struct {
 }
 
 type filterRequest struct {
-	Name      string `json:"name"`
-	Ouverture string `json:"ouverture"`
-	Place     string `json:"place"`
-	Service   string `json:"service"`
-	MinBudget uint   `json:"min_budget"`
-	MaxBudget uint   `json:"max_budget"`
+	Name      string   `json:"name"`
+	Ouverture string   `json:"ouverture"`
+	Place     string   `json:"place"`
+	Service   []string `json:"service"`
+	MinBudget uint     `json:"min_budget"`
+	MaxBudget uint     `json:"max_budget"`
 }
 
 type userReq struct {

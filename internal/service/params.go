@@ -40,7 +40,7 @@ type FilterParams struct {
 	Name      string
 	Ouverture string
 	Place     string
-	Service   string
+	Service   []string
 	MinBudget uint
 	MaxBudget uint
 }
