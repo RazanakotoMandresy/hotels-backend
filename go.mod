@@ -13,7 +13,6 @@ require (
 	github.com/lib/pq v1.10.9
 	github.com/rs/cors v1.11.1
 	github.com/sirupsen/logrus v1.9.3
-	golang.org/x/crypto v0.27.0
 	golang.org/x/oauth2 v0.23.0
 )
 
