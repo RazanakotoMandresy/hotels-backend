@@ -8,8 +8,6 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/middleware"
 )
 
-
-
 func (s Service) Login(ctx context.Context, params LoginParams) (*model.Users, error) {
 	if err := authValidator(params.Mail, params); err != nil {
 		return nil, err

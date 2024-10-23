@@ -25,7 +25,7 @@ func (s Service) RestoreDeletedHotel(ctx context.Context, uuid string) error {
 		return errors.New("you are not the creator of this hotels")
 	}
 	hotels.DeletedAt = nil
-	if err = s.repo.Update(ctx, *hotels); err != nil {
+	if err = s.repo.UpdateHotel(ctx, *hotels); err != nil {
 		return err
 	}
 	err = tx.Commit()

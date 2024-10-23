@@ -29,21 +29,21 @@ func (s Service) FilterHotels(ctx context.Context, params FilterParams) ([]filte
 func (f FilterParams) checkParams(ctx context.Context, s Service) ([]filterResHotels, error) {
 	var arrFiltedHotel []filterResHotels
 	if f.Name != "" {
-		hotels, err := s.repo.Filter(ctx, f.Name, "name")
+		hotels, err := s.repo.FilterHotels(ctx, f.Name, "name")
 		if err != nil {
 			return nil, err
 		}
 		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedName: hotels})
 	}
 	if f.Place != "" {
-		hotels, err := s.repo.Filter(ctx, f.Place, "place")
+		hotels, err := s.repo.FilterHotels(ctx, f.Place, "place")
 		if err != nil {
 			return nil, err
 		}
 		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedPlace: hotels})
 	}
 	if f.Ouverture != "" {
-		hotels, err := s.repo.Filter(ctx, f.Ouverture, "ouverture")
+		hotels, err := s.repo.FilterHotels(ctx, f.Ouverture, "ouverture")
 		if err != nil {
 			return nil, err
 		}
@@ -52,14 +52,14 @@ func (f FilterParams) checkParams(ctx context.Context, s Service) ([]filterResHo
 	// check if min and max are both not equal to zero
 	if (f.MinBudget + f.MaxBudget) != 0 {
 		// handle the price matching
-		hotels, err := s.repo.FilterPrice(ctx, f.MinBudget, f.MaxBudget)
+		hotels, err := s.repo.FilterPriceHotels(ctx, f.MinBudget, f.MaxBudget)
 		if err != nil {
 			return nil, err
 		}
 		arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedPrice: hotels})
 	}
 	if len(f.Service) != 0 {
-		allHotels, err := s.repo.FindAll(ctx)
+		allHotels, err := s.repo.FindAllHotels(ctx)
 		if err != nil {
 			return nil, err
 		}

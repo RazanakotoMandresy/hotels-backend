@@ -50,7 +50,7 @@ func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.H
 		CreatedBy:   userUUID,
 		CreatedAt:   time.Now().UTC(),
 	}
-	if err := s.repo.Create(ctx, &entity); err != nil {
+	if err := s.repo.CreateHotel(ctx, &entity); err != nil {
 		return nil, err
 	}
 	users.ListHotels = append(users.ListHotels, hotelsUUID.String())

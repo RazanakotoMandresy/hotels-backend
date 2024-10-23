@@ -8,7 +8,7 @@ import (
 )
 
 func (s Service) GetAllHotels(ctx context.Context) (*[]model.Hotels, error) {
-	hotels, err := s.repo.FindAll(ctx)
+	hotels, err := s.repo.FindAllHotels(ctx)
 	if err != nil {
 		return nil, err
 	}
