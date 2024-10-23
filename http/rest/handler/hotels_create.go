@@ -16,7 +16,7 @@ func (s service) Create() http.HandlerFunc {
 		res, err := s.services.CreateHotel(r.Context(), services.CreateParams{
 			Name:        req.Name,
 			Description: req.Description,
-			Status:      req.Status,
+			Status:      true,
 			Ouverture:   req.Ouverture,
 			Prix:        req.Prix,
 			Place:       req.Place,
