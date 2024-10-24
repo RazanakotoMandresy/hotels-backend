@@ -8,19 +8,19 @@ import (
 )
 
 type Hotels struct {
-	UUID        uuid.UUID      `db:"uuid"`
-	Name        string         `db:"name"`
-	Description string         `db:"description"`
-	Services    pq.StringArray `db:"services"`
-	Prix        uint           `db:"prix"`
-	Status      bool           `db:"status"`
-	Place       string         `db:"place"`
-	AvailableOn string         `db:"available_on "`
-	CreatedBy   string         `db:"created_by"`
-	CreatedAt   time.Time      `db:"created_at"`
-	UpdatedAt   *time.Time     `db:"updated_at"`
-	DeletedAt   *time.Time     `db:"deleted_at"`
-	Images      pq.StringArray `db:"images"`
+	UUID             uuid.UUID      `db:"uuid"`
+	Name             string         `db:"name"`
+	Description      string         `db:"description"`
+	Services         pq.StringArray `db:"services"`
+	Prix             uint           `db:"prix"`
+	Status           bool           `db:"status"`
+	Place            string         `db:"place"`
+	ReservationLists pq.StringArray `db:"reservation_list"`
+	CreatedBy        string         `db:"created_by"`
+	CreatedAt        time.Time      `db:"created_at"`
+	UpdatedAt        *time.Time     `db:"updated_at"`
+	DeletedAt        *time.Time     `db:"deleted_at"`
+	Images           pq.StringArray `db:"images"`
 }
 type Users struct {
 	UUID       uuid.UUID      `db:"uuid"`

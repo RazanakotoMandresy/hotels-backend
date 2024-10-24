@@ -14,12 +14,12 @@ func (s service) Create() http.HandlerFunc {
 			return
 		}
 		res, err := s.services.CreateHotel(r.Context(), services.CreateParams{
-			Name:        req.Name,
-			Description: req.Description,
-			Status:      true,
-			Ouverture:   req.AvailableOn,
-			Prix:        req.Prix,
-			Place:       req.Place,
+			Name:             req.Name,
+			Description:      req.Description,
+			Status:           true,
+			ReservationLists: req.ReservationLists,
+			Prix:             req.Prix,
+			Place:            req.Place,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " error on happen on the create handler from services"}, http.StatusInternalServerError)
