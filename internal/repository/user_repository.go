@@ -22,8 +22,8 @@ func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 	}
 	return err
 }
-
-func (r Repository) Login(ctx context.Context, mail string) (*model.Users, error) {
+// like login
+func (r Repository) GetUser(ctx context.Context, mail string) (*model.Users, error) {
 	entity := new(model.Users)
 	query := `SELECT * FROM users WHERE mail = $1 AND deleted_at IS NULL`
 	err := r.Db.GetContext(ctx, entity, query, mail)

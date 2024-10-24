@@ -45,6 +45,7 @@ type FilterParams struct {
 	MaxBudget uint
 }
 type ReserveParams struct {
-	Date     string
-	Password string
+	Starting_date string
+	Ending_date   string
+	Password      string
 }
