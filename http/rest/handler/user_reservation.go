@@ -17,8 +17,9 @@ func (s service) UserReservation() http.HandlerFunc {
 		}
 		req := new(reserveRequests)
 		hotels, err := s.services.ReserveHotel(r.Context(), uuid, services.ReserveParams{
-			Date:     req.Date,
-			Password: req.Password,
+			Starting_date: req.Starting_date,
+			Ending_date:   req.Ending_date,
+			Password:      req.Password,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error()}, http.StatusBadRequest)

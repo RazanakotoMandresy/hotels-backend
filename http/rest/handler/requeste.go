@@ -26,6 +26,7 @@ type userReq struct {
 	Mail      string `json:"mail"`
 }
 type reserveRequests struct {
-	Date     string `json:"date"`
-	Password string `json:"password"`
+	Starting_date string `json:"starting_date"`
+	Ending_date   string `json:"ending_date"`
+	Password      string `json:"password"`
 }
