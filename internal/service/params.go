@@ -12,13 +12,13 @@ type LoginParams struct {
 	Password string `valid:"required"`
 }
 type CreateParams struct {
-	Name        string `valid:"required"`
-	Description string `valid:"required"`
-	Services    pq.StringArray
-	Prix        uint `valid:"required"`
-	Status      bool
-	Ouverture   string `valid:"required"`
-	Place       string `valid:"required"`
+	Name             string `valid:"required"`
+	Description      string `valid:"required"`
+	Services         pq.StringArray
+	Prix             uint `valid:"required"`
+	Status           bool
+	ReservationLists []string `valid:"required"`
+	Place            string   `valid:"required"`
 }
 type RegisterParams struct {
 	Name     string `valid:"required"`
@@ -28,13 +28,13 @@ type RegisterParams struct {
 }
 
 type UpdateParams struct {
-	UUID        string `valid:"required"`
-	Name        *string
-	Description *string
-	Prix        *uint
-	Status      *bool
-	Ouverture   *string
-	UpdatedAt   time.Time
+	UUID             string `valid:"required"`
+	Name             *string
+	Description      *string
+	Prix             *uint
+	Status           *bool
+	ReservationLists *[]string
+	UpdatedAt        time.Time
 }
 type FilterParams struct {
 	Name      string
@@ -43,4 +43,8 @@ type FilterParams struct {
 	Service   []string
 	MinBudget uint
 	MaxBudget uint
+}
+type ReserveParams struct {
+	Date     string
+	Password string
 }

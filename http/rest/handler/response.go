@@ -19,3 +19,6 @@ type responseUsers struct {
 type responseString struct {
 	Res string `json:"res"`
 }
+type responseHotel struct {
+	Res model.Hotels `json:"res"`
+}
