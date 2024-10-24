@@ -4,7 +4,7 @@ CREATE TABLE
         name TEXT NOT NULL,
         place TEXT NOT NULL,
         description TEXT NOT NULL,
-        ouverture TEXT NOT NULL,
+        avalaible_on TEXT,
         created_by TEXT NOT NULL,
         prix BIGINT,
         -- status will be an boolean is open or not 
