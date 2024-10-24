@@ -25,7 +25,7 @@ func (s Service) Delete(ctx context.Context, uuid string) error {
 	defer tx.Rollback()
 	now := time.Now().UTC()
 	hotels.DeletedAt = &now
-	err = s.repo.Update(ctx, *hotels)
+	err = s.repo.UpdateHotel(ctx, *hotels)
 	if err != nil {
 		return err
 	}

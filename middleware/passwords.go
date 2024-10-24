@@ -5,7 +5,6 @@ import (
 	"crypto/cipher"
 	"crypto/rand"
 	"encoding/base64"
-	"fmt"
 	"io"
 	"os"
 )
@@ -49,23 +48,18 @@ func Decrypt(cipherText string) (string, error) {
 	keyBytes := []byte(key)
 	cipherTextBytes, err := base64.URLEncoding.DecodeString(cipherText)
 	if err != nil {
-		fmt.Println(1)
-
 		return "", err
 	}
 
 	// Create a new AES cipher block using the key.
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {
-		fmt.Println(2)
-
 		return "", err
 	}
 
 	// Create a new GCM cipher for the AES block.
 	gcm, err := cipher.NewGCM(block)
 	if err != nil {
-		fmt.Println(3)
 		return "", err
 	}
 
@@ -76,7 +70,6 @@ func Decrypt(cipherText string) (string, error) {
 	// Decrypt the cipherText back to the original plaintext.
 	plainTextBytes, err := gcm.Open(nil, nonce, cipherTextBytes, nil)
 	if err != nil {
-		fmt.Println(4)
 		return "", err
 	}
 

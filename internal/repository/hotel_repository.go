@@ -7,7 +7,7 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 )
 
-func (r Repository) Find(ctx context.Context, uuid string) (*model.Hotels, error) {
+func (r Repository) FindHotel(ctx context.Context, uuid string) (*model.Hotels, error) {
 	entity := new(model.Hotels)
 	query := "SELECT * FROM hotels WHERE uuid = $1 AND deleted_at IS NULL"
 	err := r.Db.GetContext(ctx, entity, query, uuid)
@@ -28,7 +28,7 @@ func (r Repository) FindHotelsByUUID(ctx context.Context, uuid string) (*model.H
 	return entity, nil
 }
 
-func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
+func (r Repository) CreateHotel(ctx context.Context, entity *model.Hotels) error {
 	query := `INSERT INTO hotels (uuid ,name, description, services, prix, ouverture, place,status,created_by ,  created_at, updated_at)
                 VALUES (:uuid ,:name, :description, :services, :prix, :ouverture, :place,:status,:created_by,:created_at, :updated_at) RETURNING uuid;`
 	rows, err := r.Db.NamedQueryContext(ctx, query, entity)
@@ -45,7 +45,7 @@ func (r Repository) Create(ctx context.Context, entity *model.Hotels) error {
 	return err
 }
 
-func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
+func (r Repository) UpdateHotel(ctx context.Context, entity model.Hotels) error {
 	query := `UPDATE hotels
                 SET name = :name, 
                     description = :description, 
@@ -59,7 +59,7 @@ func (r Repository) Update(ctx context.Context, entity model.Hotels) error {
 	return err
 }
 
-func (r Repository) FindAll(ctx context.Context) ([]model.Hotels, error) {
+func (r Repository) FindAllHotels(ctx context.Context) ([]model.Hotels, error) {
 	var entities []model.Hotels
 	query := "SELECT * FROM hotels WHERE deleted_at IS NULL"
 	err := r.Db.SelectContext(ctx, &entities, query)
@@ -75,7 +75,7 @@ func (r Repository) SearchQuery(ctx context.Context, search string) ([]model.Hot
 	}
 	return *entity, err
 }
-func (r Repository) Filter(ctx context.Context, condFilter, column string) ([]model.Hotels, error) {
+func (r Repository) FilterHotels(ctx context.Context, condFilter, column string) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
 	matche := fmt.Sprint("%" + condFilter + "%")
 	query := fmt.Sprintf(`SELECT * FROM hotels WHERE %v LIKE $1`, column)
@@ -85,7 +85,7 @@ func (r Repository) Filter(ctx context.Context, condFilter, column string) ([]mo
 	}
 	return *entity, nil
 }
-func (r Repository) FilterPrice(ctx context.Context, minBudget, maxBudget uint) ([]model.Hotels, error) {
+func (r Repository) FilterPriceHotels(ctx context.Context, minBudget, maxBudget uint) ([]model.Hotels, error) {
 	entity := new([]model.Hotels)
 	query := fmt.Sprintf(`SELECT * FROM hotels WHERE prix >= %v AND prix <= %v AND deleted_at IS NULL `, minBudget, maxBudget)
 	if err := r.Db.SelectContext(ctx, entity, query); err != nil {

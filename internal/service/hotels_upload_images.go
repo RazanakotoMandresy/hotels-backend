@@ -36,7 +36,7 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	}
 
 	hotels.Images = append(hotels.Images, destFile)
-	if err := s.repo.Update(ctx, *hotels); err != nil {
+	if err := s.repo.UpdateHotel(ctx, *hotels); err != nil {
 		return "", err
 	}
 	return destFile, nil

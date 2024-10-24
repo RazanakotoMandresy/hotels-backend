@@ -51,7 +51,7 @@ func (s Service) UpdateHotels(ctx context.Context, params UpdateParams) (*model.
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
-	if err := s.repo.Update(ctx, *hotels); err != nil {
+	if err := s.repo.UpdateHotel(ctx, *hotels); err != nil {
 		return nil, err
 	}
 	err = tx.Commit()
