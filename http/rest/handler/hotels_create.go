@@ -17,7 +17,7 @@ func (s service) Create() http.HandlerFunc {
 			Name:        req.Name,
 			Description: req.Description,
 			Status:      true,
-			Ouverture:   req.Ouverture,
+			Ouverture:   req.AvailableOn,
 			Prix:        req.Prix,
 			Place:       req.Place,
 		})

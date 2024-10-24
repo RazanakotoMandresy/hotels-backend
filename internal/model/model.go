@@ -15,7 +15,7 @@ type Hotels struct {
 	Prix        uint           `db:"prix"`
 	Status      bool           `db:"status"`
 	Place       string         `db:"place"`
-	Ouverture   string         `db:"ouverture"`
+	AvailableOn string         `db:"available_on "`
 	CreatedBy   string         `db:"created_by"`
 	CreatedAt   time.Time      `db:"created_at"`
 	UpdatedAt   *time.Time     `db:"updated_at"`

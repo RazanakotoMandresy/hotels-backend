@@ -40,8 +40,8 @@ func (s Service) UpdateHotels(ctx context.Context, params UpdateParams) (*model.
 	if params.Status != nil {
 		hotels.Status = *params.Status
 	}
-	if params.Ouverture != nil {
-		hotels.Ouverture = *params.Ouverture
+	if params.AvailableOn != nil {
+		hotels.AvailableOn = *params.AvailableOn
 	}
 	now := time.Now().UTC()
 	hotels.UpdatedAt = &now

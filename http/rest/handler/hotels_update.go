@@ -28,7 +28,7 @@ func (s service) Update() http.HandlerFunc {
 			Description: &req.Description,
 			Prix:        &req.Prix,
 			Status:      &req.Status,
-			Ouverture:   &req.Ouverture,
+			AvailableOn: &req.AvailableOn,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " update service"}, http.StatusInternalServerError)
