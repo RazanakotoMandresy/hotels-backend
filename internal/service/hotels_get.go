@@ -6,8 +6,8 @@ import (
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
 )
 
-func (s Service) GetHotel(ctx context.Context, uuidOrName string) (*model.Hotels, error) {
-	hotels, err := s.repo.FindHotel(ctx, uuidOrName)
+func (s Service) GetHotel(ctx context.Context, uuid string) (*model.Hotels, error) {
+	hotels, err := s.repo.FindHotel(ctx, uuid)
 	if err != nil {
 		return nil, err
 	}
