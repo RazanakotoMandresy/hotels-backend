@@ -1,5 +1,4 @@
 package handler
-
 // can add all info needed in the request
 type fullRequest struct {
 	Name             string   `json:"name"`
@@ -28,5 +27,5 @@ type userReq struct {
 type reserveRequests struct {
 	Starting_date string `json:"starting_date"`
 	Ending_date   string `json:"ending_date"`
-	Password      string `json:"password"`
+	Password      string `json:"passwords"`
 }

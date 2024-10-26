@@ -13,21 +13,14 @@ import (
 	"golang.org/x/oauth2"
 )
 
-
-
 func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.Hotels, error) {
 	userUUID := middleware.GetUserUUIDInAuth(ctx)
 	if userUUID == "" {
 		return nil, errors.New("no uuid in bearer auth")
 	}
-	hotelsUUID := uuid.New()
 	// just for oauth2 can be imported
 	fmt.Println(oauth2.AccessTypeOffline)
 	// find the user to be updated in his hotels list
-	users, err := s.repo.FindUserByUUID(ctx, userUUID)
-	if err != nil {
-		return nil, err
-	}
 
 	if _, err := govalidator.ValidateStruct(params); err != nil {
 		return nil, err
@@ -39,6 +32,21 @@ func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.H
 	}
 	// Defer a rollback in case anything fails.
 	defer tx.Rollback()
+	hotels, err := createHotels(ctx, params, userUUID, s)
+	if err != nil {
+		return nil, err
+	}
+	if err := tx.Commit(); err != nil {
+		return nil, err
+	}
+	return hotels, nil
+}
+func createHotels(ctx context.Context, params CreateParams, userUUID string, s Service) (*model.Hotels, error) {
+	hotelsUUID := uuid.New()
+	users, err := s.repo.FindUserByUUID(ctx, userUUID)
+	if err != nil {
+		return nil, err
+	}
 	entity := model.Hotels{
 		UUID:        hotelsUUID,
 		Name:        params.Name,
@@ -55,9 +63,6 @@ func (s Service) CreateHotel(ctx context.Context, params CreateParams) (*model.H
 	}
 	users.ListHotels = append(users.ListHotels, hotelsUUID.String())
 	if err := s.repo.UpdateUser(ctx, users); err != nil {
-		return nil, err
-	}
-	if err := tx.Commit(); err != nil {
 		return nil, err
 	}
 	return &entity, nil

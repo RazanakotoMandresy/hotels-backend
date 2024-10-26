@@ -13,7 +13,6 @@ func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 	if err != nil {
 		return err
 	}
-
 	for rows.Next() {
 		err = rows.StructScan(entity)
 		if err != nil {
@@ -22,6 +21,7 @@ func (r Repository) Register(ctx context.Context, entity *model.Users) error {
 	}
 	return err
 }
+
 // like login
 func (r Repository) GetUser(ctx context.Context, mail string) (*model.Users, error) {
 	entity := new(model.Users)
@@ -34,7 +34,7 @@ func (r Repository) GetUser(ctx context.Context, mail string) (*model.Users, err
 }
 func (r Repository) UpdateUser(ctx context.Context, entity *model.Users) error {
 	query := `UPDATE users SET 
-	name = :name,
+	name = :name,	
 	mail = :mail,
 	list_hotels = :list_hotels ,
 	updated_at = :updated_at WHERE uuid = :uuid;`

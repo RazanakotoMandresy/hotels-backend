@@ -23,11 +23,11 @@ func (s service) Update() http.HandlerFunc {
 		}
 
 		res, err := s.services.UpdateHotels(r.Context(), services.UpdateParams{
-			UUID:        uuid,
-			Name:        &req.Name,
-			Description: &req.Description,
-			Prix:        &req.Prix,
-			Status:      &req.Status,
+			UUID:             uuid,
+			Name:             &req.Name,
+			Description:      &req.Description,
+			Prix:             &req.Prix,
+			Status:           &req.Status,
 			ReservationLists: &req.ReservationLists,
 		})
 		if err != nil {
