@@ -34,22 +34,15 @@ $ make run
 
 #### user :
 
-il y a deux type d'utilisateur :
+There are two distinct user roles within the system:
 
-- user proprietaire : les user proprietaire peuvent create , update , delete , read , breff manipuler les hotels .
-- user simple : peut voir tous les hotels , et reserver une hotel si il est encore disponnible avec 10% du prix d'avance lors de la reservation , peut noter les hotels , peut annuler les reservation.
+- Hotel Owner: Hotel Owners possess comprehensive permissions, enabling them to perform a wide range of actions on hotel listings. These include creating new hotel listings, modifying existing ones, removing listings, restoring previously deleted listings, and accessing detailed read-only information about all hotels.
+Guest User: Guest Users have a more limited set of permissions. They can browse and view all available hotel listings, filter search results based on specific criteria, and make reservations for available rooms. Upon booking, a 10% deposit is required. Additionally, Guest Users can rate their stay at a hotel and cancel their reservations if necessary.
+Hotel Management Features:
 
-#### hotels :
+- Hotel Owners have the ability to:
 
-lorsqu'un user proprietaire cree un hotels les fonctionnaliter qu'il peut lui attribuer sont :
-
-- cree les hotels
-- y ajouter des images
-- mettre a jours les information consernant l'hotels
-- supprimer et restaurer les hotels supprimer
-
-du points de vu de l'utilisateur simple une fois connecter:
-
-- voir tous les hotels
-- faire des reservation
-- filtrer les resultat
+Create new hotel listings: Add comprehensive details about a new hotel property.
+Upload images: Include high-quality images to showcase the hotel's amenities and rooms.
+Update hotel information: Modify existing hotel listings with updated details such as pricing, availability, and descriptions.
+Soft delete and restore hotels: Remove hotel listings temporarily, with the option to restore them at a later date.
