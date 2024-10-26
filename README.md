@@ -34,15 +34,19 @@ $ make run
 
 #### user :
 
-There are two distinct user roles within the system:
+There are two types of users:
 
-- Hotel Owner: Hotel Owners possess comprehensive permissions, enabling them to perform a wide range of actions on hotel listings. These include creating new hotel listings, modifying existing ones, removing listings, restoring previously deleted listings, and accessing detailed read-only information about all hotels.
-Guest User: Guest Users have a more limited set of permissions. They can browse and view all available hotel listings, filter search results based on specific criteria, and make reservations for available rooms. Upon booking, a 10% deposit is required. Additionally, Guest Users can rate their stay at a hotel and cancel their reservations if necessary.
-Hotel Management Features:
+Owner User: Owner users can create, update, delete, read, in short, manipulate hotels.
+Simple User: Can view all hotels, and book a hotel if it is still available with a 10% deposit upon booking, can rate hotels, can cancel reservations.
+Hotels:
+When an owner user creates a hotel, the functionalities they can assign to it are:
 
-- Hotel Owners have the ability to:
+Create hotels
+Add images
+Update hotel information
+Delete and restore deleted hotels
+From the simple user's point of view once logged in:
 
-Create new hotel listings: Add comprehensive details about a new hotel property.
-Upload images: Include high-quality images to showcase the hotel's amenities and rooms.
-Update hotel information: Modify existing hotel listings with updated details such as pricing, availability, and descriptions.
-Soft delete and restore hotels: Remove hotel listings temporarily, with the option to restore them at a later date.
+View all hotels
+Make reservations
+Filter results
