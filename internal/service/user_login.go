@@ -18,7 +18,7 @@ func (s Service) Login(ctx context.Context, params LoginParams) (*model.Users, e
 	}
 	defer tx.Rollback()
 
-	users, err := s.repo.Login(ctx, params.Mail)
+	users, err := s.repo.GetUser(ctx, params.Mail)
 	if err != nil {
 		return nil, err
 	}

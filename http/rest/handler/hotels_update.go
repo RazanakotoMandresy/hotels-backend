@@ -23,12 +23,12 @@ func (s service) Update() http.HandlerFunc {
 		}
 
 		res, err := s.services.UpdateHotels(r.Context(), services.UpdateParams{
-			UUID:        uuid,
-			Name:        &req.Name,
-			Description: &req.Description,
-			Prix:        &req.Prix,
-			Status:      &req.Status,
-			Ouverture:   &req.Ouverture,
+			UUID:             uuid,
+			Name:             &req.Name,
+			Description:      &req.Description,
+			Prix:             &req.Prix,
+			Status:           &req.Status,
+			ReservationLists: &req.ReservationLists,
 		})
 		if err != nil {
 			s.respond(w, errorResponse{err.Error() + " update service"}, http.StatusInternalServerError)

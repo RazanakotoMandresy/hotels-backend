@@ -10,7 +10,7 @@ import (
 
 func (s Service) Register(ctx context.Context, params RegisterParams) (*model.Users, error) {
 	if err := authValidator(params.Mail, params); err != nil {
-		return nil, err
+		return nil, err	
 	}
 	tx, err := s.repo.Db.BeginTx(ctx, nil)
 	if err != nil {

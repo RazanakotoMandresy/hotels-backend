@@ -40,9 +40,10 @@ func (s Service) UpdateHotels(ctx context.Context, params UpdateParams) (*model.
 	if params.Status != nil {
 		hotels.Status = *params.Status
 	}
-	if params.Ouverture != nil {
-		hotels.Ouverture = *params.Ouverture
-	}
+	// TODO Fix reservation update
+	// if params.ReservationLists != nil {
+	// 	hotels.ReservationLists = *&params.ReservationLists[]
+	// }
 	now := time.Now().UTC()
 	hotels.UpdatedAt = &now
 	tx, err := s.repo.Db.BeginTxx(ctx, nil)
