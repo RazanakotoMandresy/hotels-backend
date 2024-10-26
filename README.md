@@ -36,17 +36,18 @@ $ make run
 
 There are two types of users:
 
-Owner User: Owner users can create, update, delete, read, in short, manipulate hotels.
+* Owner User: Owner users can create, update, delete, read, in short, manipulate hotels.
 Simple User: Can view all hotels, and book a hotel if it is still available with a 10% deposit upon booking, can rate hotels, can cancel reservations.
 Hotels:
-When an owner user creates a hotel, the functionalities they can assign to it are:
+* When an owner user creates a hotel, the functionalities they can assign to it are:
 
-Create hotels
-Add images
-Update hotel information
-Delete and restore deleted hotels
+- Create hotels
+- Add images
+- Update hotel information
+- Delete and restore deleted hotels
+
 From the simple user's point of view once logged in:
 
-View all hotels
-Make reservations
-Filter results
+- View all hotels
+- Make reservations
+- Filter results
