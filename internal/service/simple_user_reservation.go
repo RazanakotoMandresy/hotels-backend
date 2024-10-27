@@ -30,18 +30,19 @@ func (s Service) ReserveHotel(ctx context.Context, uuidHotels string, params Res
 	if err != nil {
 		return nil, err
 	}
-	if err := validDate(params); err != nil {
-		return nil, err
-	}
 	if decriptedPassword != params.Password {
 		return nil, errors.New(" wrong passwords ")
 	}
 	if !hotels.Status {
 		return nil, fmt.Errorf("hotels %v is not available", hotels.Name)
 	}
+	if err := validDate(params, hotels.ReservationLists); err != nil {
+		return nil, err
+	}
 	if slices.Contains(hotels.ReservationLists, Date) {
 		return nil, fmt.Errorf("hotels %v already reserved on %v", hotels.Name, Date)
 	}
+
 	hotels.ReservationLists = append(hotels.ReservationLists, Date)
 	if err := s.repo.UpdateHotel(ctx, *hotels); err != nil {
 		return nil, err
@@ -56,34 +57,30 @@ func (s Service) ReserveHotel(ctx context.Context, uuidHotels string, params Res
 	}
 	return hotels, nil
 }
-
-func validDate(r ReserveParams) error {
-	splitedStart := strings.Split(r.Starting_date, "-")
-	splitedEnding := strings.Split(r.Ending_date, "-")
-	if len(splitedEnding) != 3 || len(splitedStart) != 3 {
-		return fmt.Errorf("invalid time format should be like 2025-01-02 yyyy-mm-dd yours : starting : %v,ending %v", splitedStart, splitedEnding)
-	}
-	dateStart, err := convInt(splitedStart)
-	if err != nil {
-		return err
-	}
-	dateEnd, err := convInt(splitedEnding)
-	if err != nil {
-		return err
-	}
-
-	start := time.Date(dateStart[0], time.Month(dateStart[1]), dateStart[2], 0, 0, 0, 0, time.Local)
-	end := time.Date(dateEnd[0], time.Month(dateEnd[1]), dateStart[2], 0, 0, 0, 0, time.Local)
-	// year date[0] month date[1] day[2]
-	if time.Now().Compare(start) == +1 {
-		return fmt.Errorf(" cannot reserve in a past date ")
-	}
-	if time.Time.Compare(start, end) == +1 {
-		return fmt.Errorf(" end date is before start : %v and end %v", start, end)
+func parseReservation(prevReservations []string, newStartDate, newEndDate *time.Time) error {
+	for _, prevReservation := range prevReservations {
+		dates := strings.Split(prevReservation, "->")
+		if len(dates) != 2 {
+			return errors.New("invalid date format")
+		}
+		startDate, err := time.Parse("2006-01-02", dates[0])
+		if err != nil {
+			return err
+		}
+		endDate, err := time.Parse("2006-01-02", dates[1])
+		if err != nil {
+			return err
+		}
+		if newStartDate.Before(startDate) && newEndDate.After(endDate) {
+			return fmt.Errorf("cannot use date between %v and %v already taken until %v -> %v ", newStartDate, newEndDate, startDate, endDate)
+		}
+		valbool := newStartDate.Before(startDate) && newEndDate.After(endDate)
+		fmt.Printf("prevdateStart %v , prevdateEnd %v , newstart %v , newend %v \n ", startDate, endDate, newStartDate, newEndDate)
+		fmt.Printf("value bool %v ", valbool)
 	}
 	return nil
 }
-func convInt(dateArray []string) (map[int]int, error) {
+func strToTime(dateArray []string) (*time.Time, error) {
 	date := make(map[int]int)
 	for n, value := range dateArray {
 		int, err := strconv.Atoi(value)
@@ -92,5 +89,34 @@ func convInt(dateArray []string) (map[int]int, error) {
 		}
 		date[n] = int
 	}
-	return date, nil
+	datetTime := time.Date(date[0], time.Month(date[1]), date[2], 0, 0, 0, 0, time.UTC)
+	return &datetTime, nil
+}
+
+// func parseReservation(date string) (err , )
+func validDate(r ReserveParams, prevReserv []string) error {
+	splitedStart := strings.Split(r.Starting_date, "-")
+	splitedEnding := strings.Split(r.Ending_date, "-")
+	if len(splitedEnding) != 3 || len(splitedStart) != 3 {
+		return fmt.Errorf("invalid time format should be like 2025-01-02 yyyy-mm-dd yours : starting : %v,ending %v", splitedStart, splitedEnding)
+	}
+	dateStart, err := strToTime(splitedStart)
+	if err != nil {
+		return err
+	}
+	dateEnd, err := strToTime(splitedEnding)
+	if err != nil {
+		return err
+	}
+	// year date[0] month date[1] day[2]
+	if time.Now().Compare(*dateStart) == +1 {
+		return fmt.Errorf(" cannot reserve in a past date ")
+	}
+	if time.Time.Compare(*dateStart, *dateEnd) == +1 {
+		return fmt.Errorf(" end date is before start : %v and end %v", dateStart, dateEnd)
+	}
+	if err := parseReservation(prevReserv, dateStart, dateEnd); err != nil {
+		return err
+	}
+	return nil
 }
