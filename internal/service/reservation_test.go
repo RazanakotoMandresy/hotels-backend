@@ -5,9 +5,14 @@ import (
 )
 
 func TestDate(t *testing.T) {
-	r := ReserveParams{Starting_date: "2024-10-27", Ending_date: "2024-11-26"}
+	hotelsDate := []string{
+		"2024-10-28->2024-10-30",
+		"2024-10-31->2024-11-02",
+		"2024-11-03->2024-11-05",
+	}
+	r := ReserveParams{Starting_date: "2024-10-28", Ending_date: "2024-11-05"}
 	t.Run("validDate", func(t *testing.T) {
-		err := validDate(r)
+		err := validDate(r, hotelsDate)
 		if err != nil {
 			t.Errorf("errors %v ", err)
 		}
