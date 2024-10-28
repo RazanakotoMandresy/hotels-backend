@@ -5,7 +5,6 @@ import (
 	"errors"
 	"fmt"
 	"slices"
-	"strconv"
 	"strings"
 	"time"
 
@@ -15,6 +14,59 @@ import (
 )
 
 // TODO implements the payments
+func parseReservation(prevReservations []string, newStartDate, newEndDate *time.Time) error {
+	for _, prevReservation := range prevReservations {
+		dates := strings.Split(prevReservation, "->")
+		if len(dates) != 2 {
+			return errors.New("invalid date format")
+		}
+		startDate, err := time.Parse("2006-01-02", dates[0])
+		if err != nil {
+			return err
+		}
+		endDate, err := time.Parse("2006-01-02", dates[1])
+		if err != nil {
+			return err
+		}
+		if newStartDate.Before(startDate) && newEndDate.After(endDate) {
+			return fmt.Errorf(" cannot use date between %v and %v already taken  %v until %v ", newStartDate, newEndDate, startDate, endDate)
+		}
+	}
+	return nil
+}
+func parserStrToTime(dateStart, dateEnd string) (*time.Time, *time.Time, error) {
+	startDate, err := time.Parse(time.DateOnly, dateStart)
+	if err != nil {
+		return nil, nil, err
+	}
+	endDate, err := time.Parse(time.DateOnly, dateEnd)
+	if err != nil {
+		return nil, nil, err
+	}
+	return &startDate, &endDate, nil
+}
+func validDate(r ReserveParams, prevReserv []string) error {
+	splitedStart := strings.Split(r.Starting_date, "-")
+	splitedEnding := strings.Split(r.Ending_date, "-")
+	if len(splitedEnding) != 3 || len(splitedStart) != 3 {
+		return fmt.Errorf("invalid time format should be like 2025-01-02 yyyy-mm-dd yours : starting : %v,ending %v", splitedStart, splitedEnding)
+	}
+	dateStart, dateEnd, err := parserStrToTime(r.Starting_date, r.Ending_date)
+	if err != nil {
+		return err
+	}
+	if time.Now().Compare(*dateStart) == +1 {
+		return fmt.Errorf(" cannot reserve in a past date ")
+	}
+	if time.Time.Compare(*dateStart, *dateEnd) == +1 {
+		return fmt.Errorf(" end date is before start : %v and end %v", dateStart, dateEnd)
+	}
+	if err := parseReservation(prevReserv, dateStart, dateEnd); err != nil {
+		return err
+	}
+	return nil
+}
+
 func (s Service) ReserveHotel(ctx context.Context, uuidHotels string, params ReserveParams) (*model.Hotels, error) {
 	uuidUsr := middleware.GetUserUUIDInAuth(ctx)
 	Date := params.Starting_date + "->" + params.Ending_date
@@ -56,67 +108,4 @@ func (s Service) ReserveHotel(ctx context.Context, uuidHotels string, params Res
 		return nil, err
 	}
 	return hotels, nil
-}
-func parseReservation(prevReservations []string, newStartDate, newEndDate *time.Time) error {
-	for _, prevReservation := range prevReservations {
-		dates := strings.Split(prevReservation, "->")
-		if len(dates) != 2 {
-			return errors.New("invalid date format")
-		}
-		startDate, err := time.Parse("2006-01-02", dates[0])
-		if err != nil {
-			return err
-		}
-		endDate, err := time.Parse("2006-01-02", dates[1])
-		if err != nil {
-			return err
-		}
-		if newStartDate.Before(startDate) && newEndDate.After(endDate) {
-			return fmt.Errorf("cannot use date between %v and %v already taken until %v -> %v ", newStartDate, newEndDate, startDate, endDate)
-		}
-		valbool := newStartDate.Before(startDate) && newEndDate.After(endDate)
-		fmt.Printf("prevdateStart %v , prevdateEnd %v , newstart %v , newend %v \n ", startDate, endDate, newStartDate, newEndDate)
-		fmt.Printf("value bool %v ", valbool)
-	}
-	return nil
-}
-func strToTime(dateArray []string) (*time.Time, error) {
-	date := make(map[int]int)
-	for n, value := range dateArray {
-		int, err := strconv.Atoi(value)
-		if err != nil {
-			return nil, fmt.Errorf("all date should be an number :%v ", err)
-		}
-		date[n] = int
-	}
-	datetTime := time.Date(date[0], time.Month(date[1]), date[2], 0, 0, 0, 0, time.UTC)
-	return &datetTime, nil
-}
-
-// func parseReservation(date string) (err , )
-func validDate(r ReserveParams, prevReserv []string) error {
-	splitedStart := strings.Split(r.Starting_date, "-")
-	splitedEnding := strings.Split(r.Ending_date, "-")
-	if len(splitedEnding) != 3 || len(splitedStart) != 3 {
-		return fmt.Errorf("invalid time format should be like 2025-01-02 yyyy-mm-dd yours : starting : %v,ending %v", splitedStart, splitedEnding)
-	}
-	dateStart, err := strToTime(splitedStart)
-	if err != nil {
-		return err
-	}
-	dateEnd, err := strToTime(splitedEnding)
-	if err != nil {
-		return err
-	}
-	// year date[0] month date[1] day[2]
-	if time.Now().Compare(*dateStart) == +1 {
-		return fmt.Errorf(" cannot reserve in a past date ")
-	}
-	if time.Time.Compare(*dateStart, *dateEnd) == +1 {
-		return fmt.Errorf(" end date is before start : %v and end %v", dateStart, dateEnd)
-	}
-	if err := parseReservation(prevReserv, dateStart, dateEnd); err != nil {
-		return err
-	}
-	return nil
 }
