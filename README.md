@@ -63,7 +63,7 @@ http://localhost:<yourport>/users/register
 ```
 http://localhost:<yourport>/users/login
 ```
-*** for the body json you need *** 
+<br> for the body json you need </br>
 ``` json
 {
   "name":"name",
@@ -79,7 +79,7 @@ http://localhost:<yourport>/hotels
  ```
 http://localhost:<yourport>/hotels/filter
 ```
-*** for the body json you need *** 
+<br> for the body json you need  </br>
 ``` json
 {
   "name":"name",
@@ -97,3 +97,37 @@ http://localhost:<yourport>/hotels/<uuid_hotels>
 ```
 http://localhost:<yourport>/hotels/search?hotels=<hotel_name>
 ```
+### for these routes you need to be authentified
+
+- Create an hotels : post method
+```
+http://localhost:<yourport>/hotels
+```
+- Update an hotels : put method
+```
+http://localhost:<yourport>/hotels/<uuid_hotels>
+```
+- Delete an hotels : delete method
+```
+http://localhost:<yourport>/hotels/<uuid_hotels>
+``` 
+- Restore deleted hotels : method put
+```
+http://localhost:<yourport>/hotels/<uuid_hotels>
+```
+<h2 style="color: red "> notes : this is app is not finished yet , there are many functionnality that i haven't implement yet :like oauth2 ,anti brut force...  </h2>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
