@@ -51,3 +51,49 @@ From the simple user's point of view once logged in:
 - View all hotels
 - Make reservations
 - Filter results
+
+
+routes for the app : 
+for user creator :  
+- register : method get 
+```
+http://localhost:<yourport>/users/register
+```
+- login : method get
+```
+http://localhost:<yourport>/users/login
+```
+*** for the body json you need *** 
+``` json
+{
+  "name":"name",
+  "passwords":"passwords",
+  "mail":"email@gmail.com"
+}
+```
+- get all hotels
+```
+http://localhost:<yourport>/hotels
+```
+- get hotels but filtred by , place , services , opening date ,  max and min budget
+ ```
+http://localhost:<yourport>/hotels/filter
+```
+*** for the body json you need *** 
+``` json
+{
+  "name":"name",
+  "ouverture":"opening date",
+  "place":"place",
+  "min_budget":min_budget,
+  "service":["",""],
+}
+```
+- get an hotels by his uuid uuid
+```
+http://localhost:<yourport>/hotels/<uuid_hotels>
+```
+- search hotels by querry
+```
+http://localhost:<yourport>/hotels/search?hotels=<hotel_name>
+```
