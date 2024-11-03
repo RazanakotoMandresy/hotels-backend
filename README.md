@@ -115,7 +115,7 @@ http://localhost:<yourport>/hotels/<uuid_hotels>
 ```
 http://localhost:<yourport>/hotels/<uuid_hotels>
 ```
-<h2 style="color: red "> notes : this is app is not finished yet , there are many functionnality that i haven't implement yet :like oauth2 ,anti brut force...  </h2>
+<h2 style="color:red;"> notes : this is app is not finished yet , there are many functionnality that i haven't implement yet :like oauth2 ,anti brut force...  </h2>
 
 
 
