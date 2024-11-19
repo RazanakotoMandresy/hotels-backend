@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"errors"
 	"slices"
 
 	"github.com/RazanakotoMandresy/hotels-backend/internal/model"
@@ -69,6 +70,11 @@ func (f FilterParams) checkParams(ctx context.Context, s Service) ([]filterResHo
 					arrFiltedHotel = append(arrFiltedHotel, filterResHotels{MatchedServie: hotels})
 				}
 			}
+		}
+	}
+	for _, hotels := range arrFiltedHotel {
+		if len(hotels.MatchedName) == 0 && len(hotels.MatchedOuverture) == 0 && len(hotels.MatchedPlace) == 0 {
+			return nil, errors.New("no hotels with your needed found ")
 		}
 	}
 	return arrFiltedHotel, nil
