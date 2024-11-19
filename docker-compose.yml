@@ -8,7 +8,7 @@ services:
     volumes:
       - pgdata:/var/lib/postgresql/data
     ports:
-      - "5432:5433"
+      - "5432:5432"
   go-bank-backend:
     image: razanakotomandresy/hotels
     build: .
@@ -17,10 +17,14 @@ services:
     depends_on:
       - db
     environment:
-      DB_HOST: db
-      DB_USER: user
-      DB_PASSWORD: password
-      DB_NAME: hotels
+      DATABASE_HOST: db
+      DATABASE_PORT: 5433
+      DATABASE_USER: user
+      DATABASE_PASSWORD: password
+      DATABASE_NAME: hotels
+      JWT_SECRET: secret
+      CRYPT_KEY: CRYPT_KEY
+      SERVER_PORT: 8080
 
 volumes:
   pgdata:
