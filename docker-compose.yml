@@ -1,0 +1,26 @@
+services:
+  db:
+    image: postgres:alpine
+    environment:
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: hotels
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    ports:
+      - "5432:5433"
+  go-bank-backend:
+    image: razanakotomandresy/hotels
+    build: .
+    ports:
+      - "8080:8080"
+    depends_on:
+      - db
+    environment:
+      DB_HOST: db
+      DB_USER: user
+      DB_PASSWORD: password
+      DB_NAME: hotels
+
+volumes:
+  pgdata:
