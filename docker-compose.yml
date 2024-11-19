@@ -10,7 +10,7 @@ services:
     ports:
       - "5432:5432"
   go-bank-backend:
-    image: razanakotomandresy/hotels
+    image: razanakotomandresy/hotels-go
     # build: .
     # ports:
     #   - "8080:8080"
