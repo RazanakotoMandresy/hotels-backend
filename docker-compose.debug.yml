@@ -11,11 +11,11 @@ services:
       - "5432:5432"
   go-bank-backend:
     image: razanakotomandresy/hotels
-    build: .
-    ports:
-      - "8080:8080"
-    depends_on:
-      - db
+    # build: .
+    # ports:
+    #   - "8080:8080"
+    # depends_on:
+    #   - db
     environment:
       DATABASE_HOST: db
       DATABASE_PORT: 5433
