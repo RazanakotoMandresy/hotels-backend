@@ -19,6 +19,13 @@ jobs:
       - name: Build orders
         run: go build -C cmd/app -o ../../bin/backend .
 
+      - name: install gosec
+        run: go install github.com/securego/gosec/v2/cmd/gosec@latest
+
+      - name: sast gosec
+        run: gosec ./...
+        
+
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
 
