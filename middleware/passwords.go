@@ -5,8 +5,6 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
-// encrypt encrypts plain text using the AES encryption algorithm and a key.
-
 func Decrypt(hashedPassword, password string) error {
 	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
