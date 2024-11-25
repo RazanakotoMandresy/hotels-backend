@@ -16,6 +16,9 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "1.22"
+      - name: tidy and vendor go modules
+        run: go mod tidy && go mod vendor
+        
       - name: Build orders
         run: go build -C cmd/app -o ../../bin/backend .
 
