@@ -16,4 +16,4 @@ RUN go build -C cmd/app -o ../../bin/hotels-backend .
 
 EXPOSE 8080
 
-CMD ["./bin/backend"]
+CMD ["./bin/hotels-backend"]
