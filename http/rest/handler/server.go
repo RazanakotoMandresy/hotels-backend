@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"sync"
 	"syscall"
+	"time"
 
 	"github.com/RazanakotoMandresy/hotels-backend/configs"
 	"github.com/RazanakotoMandresy/hotels-backend/pkg/db"
@@ -51,8 +52,9 @@ func NewServer() (*Server, error) {
 
 func (s *Server) Run(ctx context.Context) error {
 	server := http.Server{
-		Addr:    fmt.Sprintf(":%d", s.config.ServerPort),
-		Handler: cors.Default().Handler(s.router),
+		ReadTimeout: 15 * time.Second,
+		Addr:        fmt.Sprintf(":%d", s.config.ServerPort),
+		Handler:     cors.Default().Handler(s.router),
 	}
 
 	stopServer := make(chan os.Signal, 1)

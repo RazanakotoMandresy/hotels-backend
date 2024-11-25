@@ -3,6 +3,7 @@ package service
 import (
 	"context"
 	"errors"
+	"path"
 
 	"io"
 	"mime/multipart"
@@ -26,7 +27,7 @@ func (s Service) UploadImages(ctx context.Context, hotelUUID string, file multip
 	}
 	splitedName := strings.Split(handler.Filename, ".")
 	destFile := "./uploads/" + splitedName[0] + hotelUUID + "." + splitedName[1]
-	out, err := os.Create(destFile)
+	out, err := os.Create(path.Clean(destFile))
 	if err != nil {
 		return "", err
 	}

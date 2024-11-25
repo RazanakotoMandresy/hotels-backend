@@ -78,12 +78,8 @@ func (s Service) ReserveHotel(ctx context.Context, uuidHotels string, params Res
 	if err != nil {
 		return nil, err
 	}
-	decriptedPassword, err := middleware.Decrypt(user.Passwords)
-	if err != nil {
+	if err := middleware.Decrypt(user.Passwords, params.Password); err != nil {
 		return nil, err
-	}
-	if decriptedPassword != params.Password {
-		return nil, errors.New(" wrong passwords ")
 	}
 	if !hotels.Status {
 		return nil, fmt.Errorf("hotels %v is not available", hotels.Name)

@@ -1,77 +1,26 @@
 package middleware
 
 import (
-	"crypto/aes"
-	"crypto/cipher"
-	"crypto/rand"
-	"encoding/base64"
-	"io"
-	"os"
+	"fmt"
+	"golang.org/x/crypto/bcrypt"
 )
 
 // encrypt encrypts plain text using the AES encryption algorithm and a key.
-func Encrypt(plainText string) (string, error) {
-	key := os.Getenv("CRYPT_KEY")
-	// Convert the key and plaintext to byte slices.
-	keyBytes := []byte(key)
-	plainTextBytes := []byte(plainText)
 
-	// Create a new AES cipher block using the key.
-	block, err := aes.NewCipher(keyBytes)
+func Decrypt(hashedPassword, password string) error {
+	err := bcrypt.CompareHashAndPassword([]byte(hashedPassword), []byte(password))
 	if err != nil {
-		return "", err
+		fmt.Println(err)
+		return err
 	}
-
-	// Create a new GCM (Galois/Counter Mode) cipher for the AES block.
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return "", err
-	}
-
-	// Create a random nonce (number used once) for encryption.
-	nonce := make([]byte, gcm.NonceSize())
-	if _, err := io.ReadFull(rand.Reader, nonce); err != nil {
-		return "", err
-	}
-
-	// Encrypt the plaintext using the GCM cipher and the nonce.
-	cipherText := gcm.Seal(nonce, nonce, plainTextBytes, nil)
-
-	// Encode the cipherText to base64 to make it easier to handle.
-	return base64.URLEncoding.EncodeToString(cipherText), nil
+	return nil
 }
 
-// decrypt decrypts the cipher text back to the original plain text using the AES encryption algorithm and a key.
-func Decrypt(cipherText string) (string, error) {
-	key := os.Getenv("CRYPT_KEY")
-	// Convert the key and cipherText to byte slices.
-	keyBytes := []byte(key)
-	cipherTextBytes, err := base64.URLEncoding.DecodeString(cipherText)
+func Encrypt(password string) (string, error) {
+	bytes, err := bcrypt.GenerateFromPassword([]byte(password), 10)
 	if err != nil {
+		fmt.Printf("Erreur lors du cryptage du mots de passe : %v \n", err)
 		return "", err
 	}
-
-	// Create a new AES cipher block using the key.
-	block, err := aes.NewCipher(keyBytes)
-	if err != nil {
-		return "", err
-	}
-
-	// Create a new GCM cipher for the AES block.
-	gcm, err := cipher.NewGCM(block)
-	if err != nil {
-		return "", err
-	}
-
-	// Extract the nonce from the cipherText.
-	nonceSize := gcm.NonceSize()
-	nonce, cipherTextBytes := cipherTextBytes[:nonceSize], cipherTextBytes[nonceSize:]
-
-	// Decrypt the cipherText back to the original plaintext.
-	plainTextBytes, err := gcm.Open(nil, nonce, cipherTextBytes, nil)
-	if err != nil {
-		return "", err
-	}
-
-	return string(plainTextBytes), nil
+	return string(bytes), nil
 }
