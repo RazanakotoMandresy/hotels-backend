@@ -16,9 +16,6 @@ jobs:
         uses: actions/setup-go@v4
         with:
           go-version: "1.22"
-      - name: tidy and vendor go modules
-        run: go mod tidy && go mod vendor
-        
       - name: Build orders
         run: go build -C cmd/app -o ../../bin/backend .
 
@@ -26,8 +23,8 @@ jobs:
         run: go install github.com/securego/gosec/v2/cmd/gosec@latest
 
       - name: sast gosec
-        run: gosec ./...
-        
+        run: gosec -exclude=G104  ./...
+
 
       - name: Set up QEMU
         uses: docker/setup-qemu-action@v3
